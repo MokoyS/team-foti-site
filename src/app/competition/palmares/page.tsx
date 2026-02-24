@@ -3,6 +3,9 @@ import { TranslatedTitle } from "@/components/TranslatedTitle";
 import { PalmaresTimeline } from "@/components/competition/PalmaresTimeline";
 import type { Metadata } from "next";
 
+/** Données Strapi à la requête. */
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Palmarès | Team Foti",
   description: "Titres mondiaux et européens de la Team Foti.",

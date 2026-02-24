@@ -4,6 +4,9 @@ import { getArticles } from "@/lib/data/get-data";
 import { TranslatedTitle } from "@/components/TranslatedTitle";
 import type { Metadata } from "next";
 
+/** Données Strapi à la requête. */
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Compétition | Team Foti",
   description: "Actualités, transferts et palmarès du service compétition Team Foti.",

@@ -8,6 +8,9 @@ import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeContactSection } from "@/components/home/HomeContactSection";
 import { RevealSection } from "@/components/ui/RevealSection";
 
+/** Données Strapi à la requête (pas au build) pour afficher les vrais produits en prod. */
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const [featured, articles] = await Promise.all([getFeaturedProducts(4), getArticles()]);
   const latestNews = articles.slice(0, 3);
