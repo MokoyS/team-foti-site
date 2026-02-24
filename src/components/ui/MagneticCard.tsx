@@ -1,6 +1,5 @@
 "use client";
 
-// @ts-expect-error — @types/react avec export= peut être signalé "is not a module" selon l'IDE ; le build Next.js passe
 import React from "react";
 import { motion, useMotionValue } from "framer-motion";
 
