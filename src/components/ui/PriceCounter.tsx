@@ -21,7 +21,6 @@ export function PriceCounter({
   const [glitchKey, setGlitchKey] = useState(0);
 
   useEffect(() => {
-    let start = 0;
     const duration = 600;
     const startTime = performance.now();
     const step = (now: number) => {

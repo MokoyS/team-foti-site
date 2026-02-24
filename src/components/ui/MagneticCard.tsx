@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 interface MagneticCardProps {
@@ -21,7 +21,6 @@ export function MagneticCard({
   const spring = useSpring(0.15);
   const xSmooth = useSpring(x, spring);
   const ySmooth = useSpring(y, spring);
-  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -37,17 +36,13 @@ export function MagneticCard({
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
-    setIsHovered(false);
   };
-
-  const handleMouseEnter = () => setIsHovered(true);
 
   return (
     <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={handleMouseEnter}
       style={{ x: xSmooth, y: ySmooth }}
       className={className}
     >
