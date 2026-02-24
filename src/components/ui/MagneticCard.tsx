@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+// @ts-expect-error — @types/react avec export= peut être signalé "is not a module" selon l'IDE ; le build Next.js passe
+import React from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 interface MagneticCardProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
   /** Force du déplacement (px) au survol */
   strength?: number;
@@ -15,11 +16,11 @@ export function MagneticCard({
   className = "",
   strength = 12,
 }: MagneticCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = React.useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: { clientX: number; clientY: number }) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;

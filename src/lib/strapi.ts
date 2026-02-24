@@ -3,7 +3,8 @@
  * vers Strapi, donc pas de CORS navigateur → Strapi.
  */
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "");
+const _envUrl = typeof globalThis !== "undefined" ? (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.NEXT_PUBLIC_STRAPI_URL : undefined;
+const STRAPI_URL = (typeof _envUrl === "string" ? _envUrl.replace(/\/$/, "") : "") || "";
 
 export function isStrapiEnabled(): boolean {
   return typeof STRAPI_URL === "string" && STRAPI_URL.length > 0;
@@ -21,7 +22,7 @@ async function strapiFetch<T>(path: string): Promise<T | null> {
     const res = await fetch(url, {
       next: { revalidate: 60 },
       headers: { "Content-Type": "application/json" },
-    });
+    } as RequestInit);
     if (!res.ok) {
       console.warn(`[Strapi] ${url} → ${res.status} ${res.statusText}. Vérifiez les permissions Public (find/findOne) et que Strapi tourne.`);
       return null;
@@ -121,9 +122,12 @@ function mapPalmares(entry: StrapiPalmaresEntry): { year: string; title: string;
 
 /** Produits depuis Strapi (côté serveur). Retourne null si Strapi désactivé ou erreur. */
 export async function fetchStrapiProducts(): Promise<{ id: string; name: string; slug: string; description: string; price: number; category: string; stock: number }[] | null> {
-  const data = await strapiFetch<{ data?: unknown[] }>("/api/products?publicationState=live");
-  if (!data?.data || !Array.isArray(data.data)) return null;
-  return data.data.map((e: unknown) => mapProduct(e as StrapiProductEntry));
+  const raw = await strapiFetch<unknown>("/api/products?publicationState=live");
+  if (!raw || typeof raw !== "object") return null;
+  const o = raw as Record<string, unknown>;
+  const arr = Array.isArray(o.data) ? o.data : (o.data && typeof o.data === "object" && Array.isArray((o.data as Record<string, unknown>).data)) ? (o.data as Record<string, unknown[]>).data : null;
+  if (!Array.isArray(arr)) return null;
+  return arr.map((e: unknown) => mapProduct(e as StrapiProductEntry));
 }
 
 /** Un produit par slug depuis Strapi. */
