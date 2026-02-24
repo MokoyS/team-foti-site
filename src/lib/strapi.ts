@@ -57,7 +57,9 @@ interface StrapiPalmaresAttrs {
   order?: number;
 }
 
-function mapProduct(entry: { id?: number; documentId?: string; attributes?: StrapiProductAttrs } & StrapiProductAttrs): {
+type StrapiProductEntry = { id?: number; documentId?: string; attributes?: StrapiProductAttrs };
+
+function mapProduct(entry: StrapiProductEntry): {
   id: string;
   name: string;
   slug: string;
@@ -79,7 +81,9 @@ function mapProduct(entry: { id?: number; documentId?: string; attributes?: Stra
   };
 }
 
-function mapArticle(entry: { id: number; documentId?: string; attributes?: StrapiArticleAttrs } & StrapiArticleAttrs): {
+type StrapiArticleEntry = { id?: number; documentId?: string; attributes?: StrapiArticleAttrs };
+
+function mapArticle(entry: StrapiArticleEntry): {
   id: string;
   title: string;
   slug: string;
@@ -104,7 +108,9 @@ function mapArticle(entry: { id: number; documentId?: string; attributes?: Strap
   };
 }
 
-function mapPalmares(entry: { id: number; attributes?: StrapiPalmaresAttrs }): { year: string; title: string; event: string } {
+type StrapiPalmaresEntry = { id?: number; attributes?: StrapiPalmaresAttrs };
+
+function mapPalmares(entry: StrapiPalmaresEntry): { year: string; title: string; event: string } {
   const attrs = entry.attributes || (entry as unknown as StrapiPalmaresAttrs);
   return {
     year: attrs.year ?? "",
@@ -117,26 +123,26 @@ function mapPalmares(entry: { id: number; attributes?: StrapiPalmaresAttrs }): {
 export async function fetchStrapiProducts(): Promise<{ id: string; name: string; slug: string; description: string; price: number; category: string; stock: number }[] | null> {
   const data = await strapiFetch<{ data?: unknown[] }>("/api/products?publicationState=live");
   if (!data?.data || !Array.isArray(data.data)) return null;
-  return data.data.map((e: unknown) => mapProduct(e as { id: number; documentId?: string; attributes?: StrapiProductAttrs }));
+  return data.data.map((e: unknown) => mapProduct(e as StrapiProductEntry));
 }
 
 /** Un produit par slug depuis Strapi. */
 export async function fetchStrapiProductBySlug(slug: string): Promise<{ id: string; name: string; slug: string; description: string; price: number; category: string; stock: number } | null> {
   const data = await strapiFetch<{ data?: unknown[] }>(`/api/products?filters[slug][$eq]=${encodeURIComponent(slug)}&publicationState=live`);
   if (!data?.data?.[0]) return null;
-  return mapProduct(data.data[0] as { id: number; documentId?: string; attributes?: StrapiProductAttrs });
+  return mapProduct(data.data[0] as StrapiProductEntry);
 }
 
 /** Articles depuis Strapi (avec image de couverture peuplée). */
 export async function fetchStrapiArticles(): Promise<{ id: string; title: string; slug: string; content: string; type: "News" | "Transfert" | "Résultat"; date: string; image_cover?: string }[] | null> {
   const data = await strapiFetch<{ data?: unknown[] }>("/api/articles?publicationState=live&sort[0]=date:desc&populate=image_cover");
   if (!data?.data || !Array.isArray(data.data)) return null;
-  return data.data.map((e: unknown) => mapArticle(e as { id: number; documentId?: string; attributes?: StrapiArticleAttrs }));
+  return data.data.map((e: unknown) => mapArticle(e as StrapiArticleEntry));
 }
 
 /** Palmarès depuis Strapi. */
 export async function fetchStrapiPalmares(): Promise<{ year: string; title: string; event: string }[] | null> {
   const data = await strapiFetch<{ data?: unknown[] }>("/api/palmares-entries?sort[0]=order:desc");
   if (!data?.data || !Array.isArray(data.data)) return null;
-  return data.data.map((e: unknown) => mapPalmares(e as { id: number; attributes?: StrapiPalmaresAttrs }));
+  return data.data.map((e: unknown) => mapPalmares(e as StrapiPalmaresEntry));
 }
