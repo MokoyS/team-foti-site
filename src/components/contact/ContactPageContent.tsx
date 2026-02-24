@@ -15,7 +15,7 @@ export function ContactPageContent() {
             Direct Line
           </p>
           <p className="text-foreground/90 text-lg font-heading italic mb-12">
-            L'excellence technique ne prend pas de rendez-vous. Contactez notre atelier.
+            L&apos;excellence technique ne prend pas de rendez-vous. Contactez notre atelier.
           </p>
         </ScrollReveal>
 

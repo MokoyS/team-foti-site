@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { BentoGrid, BentoCell } from "@/components/ui/BentoGrid";
 import { TeamMemberCard } from "@/components/team/TeamMemberCard";
 import { teamMembers } from "@/lib/data/team";
@@ -12,7 +11,7 @@ export function TeamPageContent() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
         <ScrollReveal>
           <h1 className="font-heading font-extrabold italic text-3xl sm:text-4xl text-accent-yellow tracking-tight mb-2">
-            L'équipe
+            L&apos;équipe
           </h1>
           <p className="font-mono text-xs text-foreground/50 uppercase tracking-widest mb-4">
             The Crew
@@ -41,7 +40,7 @@ export function TeamPageContent() {
 
         <ScrollReveal delay={0.1}>
           <h2 className="font-heading font-bold italic text-xl text-accent-yellow tracking-tight mb-8">
-            L'équipe technique
+            L&apos;équipe technique
           </h2>
         </ScrollReveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { TeamMember } from "@/lib/data/team";
 
@@ -19,13 +20,13 @@ export function TeamMemberCard({ member, index }: TeamMemberCardProps) {
     >
       <div className="relative aspect-[3/4] bg-carbon-600 overflow-hidden">
         {member.image ? (
-          <>
-            <img
-              src={member.image}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
-          </>
+          <Image
+            src={member.image}
+            alt=""
+            fill
+            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-carbon-600 to-carbon-700 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
             <span className="font-mono text-4xl font-bold text-white/20 group-hover:text-accent-yellow/30 transition-colors">
