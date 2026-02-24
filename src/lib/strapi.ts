@@ -15,21 +15,33 @@ function getStrapiUrl(path: string): string {
   return `${STRAPI_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+/** Timeout des appels Strapi (ms) — évite de bloquer le build Vercel si Strapi est lent ou injoignable. */
+const STRAPI_FETCH_TIMEOUT_MS = 8000;
+
 async function strapiFetch<T>(path: string): Promise<T | null> {
   if (!isStrapiEnabled()) return null;
   const url = getStrapiUrl(path);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), STRAPI_FETCH_TIMEOUT_MS);
   try {
     const res = await fetch(url, {
+      signal: controller.signal,
       next: { revalidate: 60 },
       headers: { "Content-Type": "application/json" },
     } as RequestInit);
+    clearTimeout(timeoutId);
     if (!res.ok) {
       console.warn(`[Strapi] ${url} → ${res.status} ${res.statusText}. Vérifiez les permissions Public (find/findOne) et que Strapi tourne.`);
       return null;
     }
     return res.json() as Promise<T>;
   } catch (err) {
-    console.warn("[Strapi] Erreur fetch:", err instanceof Error ? err.message : url);
+    clearTimeout(timeoutId);
+    if ((err as { name?: string })?.name === "AbortError") {
+      console.warn("[Strapi] Timeout:", url);
+    } else {
+      console.warn("[Strapi] Erreur fetch:", err instanceof Error ? err.message : url);
+    }
     return null;
   }
 }
