@@ -3,11 +3,11 @@ import { getProductBySlug } from "@/lib/data/get-data";
 import { ProductPageContent } from "@/components/shop/ProductPageContent";
 
 interface ProductPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const product = slug ? await getProductBySlug(slug) : undefined;
 
   if (!product) {

@@ -11,7 +11,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^8.8.0",
     "framer-motion": "^12.34.3",
-    "next": "14.2.35",
+    "next": "15.5.10",
     "react": "^18",
     "react-dom": "^18",
     "stripe": "^20.3.1",
@@ -22,9 +22,13 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.35",
+    "eslint-config-next": "15.0.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "minimatch": ">=10.2.1",
+    "glob": ">=10.6.0"
   }
 }

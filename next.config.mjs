@@ -14,6 +14,10 @@ const nextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
     ],
   },
+  // Désactive ESLint pendant le build pour accélérer (lance "npm run lint" à part ou en CI)
+  eslint: { ignoreDuringBuilds: true },
+  // Pas de source maps en prod = build un peu plus rapide
+  productionBrowserSourceMaps: false,
   experimental: {
     optimizePackageImports: ["framer-motion"],
   },
