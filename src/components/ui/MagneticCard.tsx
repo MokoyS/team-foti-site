@@ -1,0 +1,57 @@
+"use client";
+
+import { useRef, useState, type ReactNode } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+
+interface MagneticCardProps {
+  children: ReactNode;
+  className?: string;
+  /** Force du déplacement (px) au survol */
+  strength?: number;
+}
+
+export function MagneticCard({
+  children,
+  className = "",
+  strength = 12,
+}: MagneticCardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const spring = useSpring(0.15);
+  const xSmooth = useSpring(x, spring);
+  const ySmooth = useSpring(y, spring);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const deltaX = (e.clientX - centerX) / rect.width;
+    const deltaY = (e.clientY - centerY) / rect.height;
+    x.set(deltaX * strength);
+    y.set(deltaY * strength);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+    setIsHovered(false);
+  };
+
+  const handleMouseEnter = () => setIsHovered(true);
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouseEnter}
+      style={{ x: xSmooth, y: ySmooth }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}

@@ -1,0 +1,190 @@
+export const translations = {
+  fr: {
+    nav: {
+      home: "Accueil",
+      shop: "Boutique",
+      about: "À propos de nous",
+      team: "L'équipe",
+      blog: "Actualité",
+      contact: "Contact",
+      cart: "Panier",
+      checkout: "Commander",
+      legal: "Mentions légales",
+      cgv: "CGV",
+    },
+    home: {
+      heroTitle: "L'Excellence du Karting depuis 40 ans",
+      heroSubtitle: "De la compétition internationale à votre garage",
+      heroCta: "Découvrir la boutique",
+      featuredProducts: "Produits phares",
+      viewInShop: "Voir dans la boutique",
+      aboutTitle: "À propos",
+      aboutTeaser:
+        "Une institution familiale du karting, fondée par les Foti. Expertise technique, palmarès en Championnat d'Europe et en France. Nous accompagnons le père de famille comme le pilote professionnel.",
+      aboutCta: "À propos de nous",
+      latestNews: "Actualité",
+      blogCta: "Voir le blog",
+      contactTitle: "Contact",
+      contactTeaser: "Loriol-sur-Drôme · Tél. & email ci-dessous",
+      contactCta: "Nous contacter",
+    },
+    shop: {
+      title: "Boutique",
+      addToCart: "Ajouter au panier",
+      outOfStock: "Rupture de stock",
+      category: "Catégorie",
+    },
+    cart: {
+      title: "Votre panier",
+      empty: "Votre panier est vide",
+      total: "Total",
+      continueShopping: "Continuer mes achats",
+    },
+    checkout: {
+      title: "Finaliser la commande",
+      step1: "Livraison",
+      step2: "Paiement",
+      step3: "Confirmation",
+      email: "Email",
+      address: "Adresse",
+      city: "Ville",
+      zip: "Code postal",
+      country: "Pays",
+      payWith: "Payer avec",
+      placeOrder: "Commander",
+      success: "Commande validée",
+    },
+    about: {
+      title: "À propos de nous",
+      intro: "Team Foti, une institution familiale du karting depuis 40 ans.",
+      body1:
+        "Fondée par les Foti à Loriol-sur-Drôme, l'entreprise allie passion du sport mécanique et expertise technique. Nous sommes présents de la compétition internationale au garage du particulier.",
+      body2:
+        "Notre palmarès parle pour nous : titres de Champion d'Europe, victoires en France. Nous accompagnons les pilotes professionnels comme les familles qui souhaitent faire rouler leurs enfants en toute sérénité.",
+      body3:
+        "Karts, pièces détachées, consommables et conseils : une équipe à votre écoute pour vous équiper et vous faire progresser.",
+    },
+    team: {
+      title: "L'équipe",
+      intro: "Une équipe passionnée au service du karting.",
+      body: "Les Foti et leurs collaborateurs mettent leur expérience au service des pilotes et des structures. Technique, logistique et relation client sont au cœur de notre engagement.",
+    },
+    blog: {
+      title: "Actualité",
+      description: "Articles de course, transferts et résultats.",
+      noArticles: "Aucun article pour le moment.",
+    },
+    contact: {
+      title: "Contact",
+      address: "Adresse",
+      addressValue: "Loriol-sur-Drôme, France",
+      phone: "Téléphone",
+      email: "Email",
+      noForm: "Pour toute demande, contactez-nous directement par téléphone ou par email.",
+    },
+    footer: {
+      rights: "Tous droits réservés.",
+    },
+    cookie: {
+      message:
+        "Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre politique de confidentialité.",
+      accept: "Accepter",
+      decline: "Refuser",
+    },
+  },
+  en: {
+    nav: {
+      home: "Home",
+      shop: "Shop",
+      about: "About us",
+      team: "The team",
+      blog: "News",
+      contact: "Contact",
+      cart: "Cart",
+      checkout: "Checkout",
+      legal: "Legal",
+      cgv: "Terms",
+    },
+    home: {
+      heroTitle: "Karting Excellence for 40 Years",
+      heroSubtitle: "From international competition to your garage",
+      heroCta: "Discover the shop",
+      featuredProducts: "Featured products",
+      viewInShop: "View in shop",
+      aboutTitle: "About",
+      aboutTeaser:
+        "A family institution in karting, founded by the Foti family. Technical expertise, European and French championship titles. We support families and professional drivers alike.",
+      aboutCta: "About us",
+      latestNews: "News",
+      blogCta: "View the blog",
+      contactTitle: "Contact",
+      contactTeaser: "Loriol-sur-Drôme · Phone & email below",
+      contactCta: "Contact us",
+    },
+    shop: {
+      title: "Shop",
+      addToCart: "Add to cart",
+      outOfStock: "Out of stock",
+      category: "Category",
+    },
+    cart: {
+      title: "Your cart",
+      empty: "Your cart is empty",
+      total: "Total",
+      continueShopping: "Continue shopping",
+    },
+    checkout: {
+      title: "Checkout",
+      step1: "Delivery",
+      step2: "Payment",
+      step3: "Confirmation",
+      email: "Email",
+      address: "Address",
+      city: "City",
+      zip: "Postal code",
+      country: "Country",
+      payWith: "Pay with",
+      placeOrder: "Place order",
+      success: "Order confirmed",
+    },
+    about: {
+      title: "About us",
+      intro: "Team Foti, a family institution in karting for 40 years.",
+      body1:
+        "Founded by the Foti family in Loriol-sur-Drôme, the company combines a passion for motorsport with technical expertise. We are present from international competition to the private garage.",
+      body2:
+        "Our track record speaks for itself: European Championship titles, victories in France. We support professional drivers as well as families who want their children to race with peace of mind.",
+      body3:
+        "Karts, spare parts, consumables and advice: a team at your service to equip you and help you progress.",
+    },
+    team: {
+      title: "The team",
+      intro: "A passionate team at the service of karting.",
+      body: "The Foti family and their collaborators put their experience at the service of drivers and teams. Technical support, logistics and customer relations are at the heart of our commitment.",
+    },
+    blog: {
+      title: "News",
+      description: "Race reports, transfers and results.",
+      noArticles: "No articles yet.",
+    },
+    contact: {
+      title: "Contact",
+      address: "Address",
+      addressValue: "Loriol-sur-Drôme, France",
+      phone: "Phone",
+      email: "Email",
+      noForm: "For any enquiry, please contact us directly by phone or email.",
+    },
+    footer: {
+      rights: "All rights reserved.",
+    },
+    cookie: {
+      message:
+        "We use cookies to improve your experience. By continuing, you accept our privacy policy.",
+      accept: "Accept",
+      decline: "Decline",
+    },
+  },
+} as const;
+
+export type Locale = keyof typeof translations;
