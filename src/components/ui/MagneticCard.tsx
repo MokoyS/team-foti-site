@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 
 interface MagneticCardProps {
   children: ReactNode;
@@ -18,9 +18,6 @@ export function MagneticCard({
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const spring = useSpring(0.15);
-  const xSmooth = useSpring(x, spring);
-  const ySmooth = useSpring(y, spring);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -43,7 +40,7 @@ export function MagneticCard({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x: xSmooth, y: ySmooth }}
+      style={{ x, y }}
       className={className}
     >
       {children}
