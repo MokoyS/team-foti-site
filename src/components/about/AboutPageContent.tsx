@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useRef } from "react";
 import { Timeline, type TimelineItem } from "@/components/ui/Timeline";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -95,7 +95,7 @@ const TIMELINE: TimelineItem[] = [
 // Animation variants
 // ---------------------------------------------------------------------------
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 32, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,

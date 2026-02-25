@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useRef } from "react";
 import { ArticleCardElite } from "@/components/competition/ArticleCardElite";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -14,7 +14,7 @@ interface ActualitePageContentProps {
   articles: Article[];
 }
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 32, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useRef } from "react";
 import { TeamMemberCard } from "@/components/team/TeamMemberCard";
 import { teamMembers } from "@/lib/data/team";
@@ -63,7 +63,7 @@ const PILLARS = [
   },
 ];
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 32, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,
