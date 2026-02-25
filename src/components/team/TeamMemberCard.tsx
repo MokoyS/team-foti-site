@@ -16,7 +16,7 @@ export function TeamMemberCard({ member, index }: TeamMemberCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.06 }}
-      className="group relative rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-accent-yellow/20 hover:shadow-[0_0_32px_-8px_rgba(255,215,0,0.15)]"
+      className="group relative rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm overflow-hidden transition-colors duration-200 hover:border-white/[0.14]"
     >
       <div className="relative aspect-[3/4] bg-carbon-600 overflow-hidden">
         {member.image ? (

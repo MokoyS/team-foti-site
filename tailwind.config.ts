@@ -24,7 +24,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["var(--font-plus-jakarta-sans)", "system-ui", "sans-serif"],
+        heading: ["var(--font-play)", "system-ui", "sans-serif"],
+        sans: ["var(--font-poppins)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       boxShadow: {

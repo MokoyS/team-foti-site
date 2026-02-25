@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import type { Product } from "@/lib/data/products";
 import { useLocale } from "@/contexts/LocaleContext";
 import { GlowCard } from "@/components/ui/GlowCard";
+import { RacingButton } from "@/components/ui/RacingButton";
 
 interface FeaturedProductCardProps {
   product: Product;
@@ -22,7 +23,7 @@ export function FeaturedProductCard({ product }: FeaturedProductCardProps) {
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
       className="h-full flex flex-col"
     >
-      <GlowCard glow="yellow" className="flex-1 flex flex-col overflow-hidden group">
+      <GlowCard className="flex-1 flex flex-col overflow-hidden group">
         <Link href={`/shop/${product.slug}`} className="flex-1 flex flex-col">
           <div className="aspect-square bg-carbon-700/50 flex items-center justify-center text-foreground/30 font-mono text-xs uppercase tracking-wider">
             {product.category}
@@ -51,12 +52,9 @@ export function FeaturedProductCard({ product }: FeaturedProductCardProps) {
           </div>
         </Link>
         <div className="p-5 pt-0">
-          <Link
-            href={`/shop/${product.slug}`}
-            className="block w-full text-center rounded-xl border border-accent-yellow py-2.5 font-heading text-sm font-bold italic text-accent-yellow transition btn-glow-yellow hover:bg-accent-yellow/10"
-          >
+          <RacingButton href={`/shop/${product.slug}`} variant="ghost" arrow className="w-full py-2.5 text-sm">
             {t("home.viewInShop")}
-          </Link>
+          </RacingButton>
         </div>
       </GlowCard>
     </motion.article>

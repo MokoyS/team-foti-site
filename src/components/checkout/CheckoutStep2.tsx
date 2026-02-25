@@ -70,7 +70,7 @@ export function CheckoutStep2({ amount, onSuccess }: CheckoutStep2Props) {
         <button
           type="button"
           onClick={onSuccess}
-          className="mt-4 px-4 py-2 border border-accent-yellow text-accent-yellow rounded-lg hover:bg-accent-yellow/10"
+          className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 border border-white/20 text-foreground/80 font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:border-white/40 hover:bg-white/[0.04] active:scale-[0.98]"
         >
           Simuler une commande validée
         </button>
@@ -96,9 +96,9 @@ export function CheckoutStep2({ amount, onSuccess }: CheckoutStep2Props) {
             type="button"
             onClick={handlePay}
             disabled={loading}
-            className="w-full mt-4 px-6 py-3 bg-accent-yellow text-background font-heading font-bold rounded-lg disabled:opacity-50"
+            className="group w-full mt-4 inline-flex items-center justify-center gap-2.5 px-6 py-2.5 bg-white text-background font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {loading ? "..." : t("checkout.placeOrder")}
+            {loading ? "Chargement…" : t("checkout.placeOrder")}
           </button>
         </>
       ) : (
@@ -109,7 +109,7 @@ export function CheckoutStep2({ amount, onSuccess }: CheckoutStep2Props) {
           <button
             type="button"
             onClick={onSuccess}
-            className="w-full mt-4 px-6 py-3 bg-accent-yellow text-background font-heading font-bold rounded-lg"
+            className="group w-full mt-4 inline-flex items-center justify-center gap-2.5 px-6 py-2.5 bg-white text-background font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
           >
             Simuler la commande (démo)
           </button>

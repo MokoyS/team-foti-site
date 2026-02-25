@@ -1,12 +1,15 @@
-import Link from "next/link";
 import { Hero } from "@/components/home/Hero";
 import { FeaturedProductCard } from "@/components/home/FeaturedProductCard";
 import { ArticleCard } from "@/components/competition/ArticleCard";
 import { getFeaturedProducts, getArticles } from "@/lib/data/get-data";
 import { TranslatedTitle } from "@/components/TranslatedTitle";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
+import { ParallaxGallery } from "@/components/home/ParallaxGallery";
 import { HomeContactSection } from "@/components/home/HomeContactSection";
 import { RevealSection } from "@/components/ui/RevealSection";
+import { RacingButton } from "@/components/ui/RacingButton";
+import { RacingSeparator } from "@/components/ui/RacingSeparator";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 /** Données Strapi à la requête (pas au build) pour afficher les vrais produits en prod. */
 export const dynamic = "force-dynamic";
@@ -18,50 +21,43 @@ export default async function Home() {
   return (
     <>
       <Hero />
+        {/* À propos */}
+        <HomeAboutSection />
 
-      {/* Produits phares */}
-      <RevealSection beams>
+      {/* Produits phares – pas de séparateur, fondu depuis le Hero */}
+      <RevealSection>
         <section id="shop" className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-16 md:py-20 relative">
-          <h2 className="font-heading font-bold italic text-2xl text-accent-yellow tracking-tight mb-8">
-            <TranslatedTitle translationKey="home.featuredProducts" />
-          </h2>
+          <SectionHeader eyebrow="SHOP" title="Produits phares" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featured.map((p) => (
               <FeaturedProductCard key={p.id} product={p} />
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Link
-              href="/shop"
-              className="inline-block px-6 py-3 border border-accent-yellow text-accent-yellow font-heading font-bold italic rounded-xl transition btn-glow-yellow hover:bg-accent-yellow/10"
-            >
+            <RacingButton href="/shop" variant="ghost" arrow>
               <TranslatedTitle translationKey="home.viewInShop" />
-            </Link>
+            </RacingButton>
           </div>
         </section>
       </RevealSection>
 
-      {/* À propos */}
-      <HomeAboutSection />
+      {/* Galerie parallax */}
+      <ParallaxGallery title="En piste" />
+
 
       {/* Actualité */}
       <RevealSection beams>
-        <section className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-16 border-t border-white/10 relative">
-          <h2 className="font-heading font-bold italic text-2xl text-accent-yellow tracking-tight mb-8">
-            <TranslatedTitle translationKey="home.latestNews" />
-          </h2>
+        <section className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-16 relative">
+          <SectionHeader eyebrow="NEWS" title="Actualité" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {latestNews.map((a) => (
               <ArticleCard key={a.id} article={a} />
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Link
-              href="/actualite"
-              className="inline-block px-6 py-3 border border-accent-red text-accent-red font-heading font-bold italic rounded-xl transition btn-glow-red hover:bg-accent-red/10"
-            >
+            <RacingButton href="/actualite" variant="ghost" arrow>
               <TranslatedTitle translationKey="home.blogCta" />
-            </Link>
+            </RacingButton>
           </div>
         </section>
       </RevealSection>

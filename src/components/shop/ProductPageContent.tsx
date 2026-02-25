@@ -45,9 +45,12 @@ export function ProductPageContent({ product }: ProductPageContentProps) {
             <button
               type="button"
               onClick={handleAddToCart}
-              className="mt-6 px-6 py-3 bg-accent-yellow text-background font-heading font-bold rounded-lg btn-glow hover:shadow-glow transition"
+              className="group mt-6 inline-flex items-center gap-2.5 px-6 py-2.5 bg-white text-background font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
             >
               {t("shop.addToCart")}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden>
+                <path d="M2 7h10M8 3l4 4-4 4" />
+              </svg>
             </button>
           ) : (
             <p className="mt-6 text-accent-red">{t("shop.outOfStock")}</p>

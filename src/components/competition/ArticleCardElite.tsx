@@ -32,7 +32,7 @@ export function ArticleCardElite({ article, index }: ArticleCardEliteProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.06 }}
-      className="group relative rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm overflow-hidden hover:border-accent-yellow/20 hover:shadow-[0_0_32px_-8px_rgba(255,215,0,0.12)] transition-all duration-300"
+      className="group relative rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm overflow-hidden transition-colors duration-200 hover:border-white/[0.14]"
     >
       {article.image_cover ? (
         <motion.div

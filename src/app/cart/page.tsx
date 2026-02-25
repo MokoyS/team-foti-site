@@ -17,7 +17,7 @@ export default function CartPage() {
         <p className="text-foreground/70">{t("cart.empty")}</p>
         <Link
           href="/shop"
-          className="mt-6 inline-block px-6 py-3 bg-accent-yellow text-background font-heading font-bold rounded-lg"
+          className="group mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-white/20 text-foreground/80 font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:border-white/40 hover:text-foreground hover:bg-white/[0.04] active:scale-[0.98]"
         >
           {t("cart.continueShopping")}
         </Link>
@@ -82,9 +82,12 @@ export default function CartPage() {
           </p>
           <Link
             href="/checkout"
-            className="px-6 py-3 bg-accent-yellow text-background font-heading font-bold rounded-lg btn-glow"
+            className="group inline-flex items-center gap-2.5 px-5 py-2.5 bg-white text-background font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
           >
             {t("nav.checkout")}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden>
+              <path d="M2 7h10M8 3l4 4-4 4" />
+            </svg>
           </Link>
         </div>
       </div>

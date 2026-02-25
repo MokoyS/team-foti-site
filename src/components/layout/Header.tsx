@@ -34,9 +34,9 @@ export function Header() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className={`fixed top-4 left-0 right-0 mx-auto w-[calc(100%-2rem)] max-w-5xl z-50 rounded-xl transition-all duration-300 md:w-[calc(100%-3rem)] ${
+      className={`fixed top-4 left-0 right-0 mx-auto w-[calc(100%-2rem)] max-w-5xl z-[100] rounded-xl transition-all duration-300 md:w-[calc(100%-3rem)] ${
         scrolled
-          ? "bg-white/[0.06] backdrop-blur-xl border border-accent-yellow/20 shadow-[0_0_24px_-4px_rgba(255,215,0,0.12)]"
+          ? "bg-white/[0.06] backdrop-blur-xl border border-white/20"
           : "bg-white/[0.04] backdrop-blur-xl border border-white/[0.08]"
       }`}
     >
@@ -92,7 +92,7 @@ export function Header() {
           </button>
           <Link
             href="/cart"
-            className="relative p-2 rounded-lg hover:bg-white/5 transition btn-glow-yellow"
+            className="relative p-2 rounded-lg hover:bg-white/5 transition"
             aria-label={t("nav.cart")}
           >
             <svg

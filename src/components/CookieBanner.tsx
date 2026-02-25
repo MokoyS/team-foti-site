@@ -48,14 +48,14 @@ export function CookieBanner() {
               <button
                 type="button"
                 onClick={decline}
-                className="px-4 py-2 text-sm border border-white/20 rounded-lg hover:bg-white/5 transition"
+                className="px-4 py-2 text-sm border border-white/20 text-foreground/70 font-heading font-semibold rounded-lg transition-all duration-200 hover:border-white/40 hover:bg-white/[0.04] active:scale-[0.98]"
               >
                 {t("cookie.decline")}
               </button>
               <button
                 type="button"
                 onClick={accept}
-                className="px-4 py-2 text-sm bg-accent-yellow text-background font-medium rounded-lg hover:shadow-glow transition"
+                className="px-4 py-2 text-sm bg-white text-background font-heading font-semibold rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
               >
                 {t("cookie.accept")}
               </button>

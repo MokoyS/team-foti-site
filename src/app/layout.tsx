@@ -1,23 +1,32 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Play, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import { Header } from "@/components/layout/Header";
 import { CookieBanner } from "@/components/CookieBanner";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollTrack } from "@/components/ui/ScrollTrack";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
+const play = Play({
+  variable: "--font-play",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  style: ["normal", "italic"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -38,9 +47,10 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <body
-        className={`${plusJakartaSans.variable} ${geistMono.variable} font-heading antialiased bg-background text-foreground min-h-screen flex flex-col w-full box-border`}
+        className={`${play.variable} ${poppins.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground min-h-screen flex flex-col w-full box-border`}
       >
         <LocaleProvider>
+          <ScrollTrack />
           <Header />
           <main className="flex-1 w-full pt-24 box-border">{children}</main>
           <Footer />

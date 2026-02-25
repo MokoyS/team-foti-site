@@ -33,9 +33,12 @@ export function HeroContent() {
       >
         <Link
           href="/shop"
-          className="inline-block rounded-xl bg-accent-yellow px-6 py-3 font-heading font-bold text-background shadow-lg transition btn-glow-yellow hover:shadow-glow"
+          className="group inline-flex items-center gap-2.5 rounded-lg bg-white text-background px-6 py-3 font-heading font-semibold text-sm transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
         >
           {t("home.heroCta")}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden>
+            <path d="M2 7h10M8 3l4 4-4 4" />
+          </svg>
         </Link>
       </motion.div>
     </div>

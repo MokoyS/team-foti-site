@@ -75,9 +75,12 @@ export function CheckoutStep1({ onComplete }: CheckoutStep1Props) {
       </div>
       <button
         type="submit"
-        className="w-full mt-6 px-6 py-3 bg-accent-yellow text-background font-heading font-bold rounded-lg btn-glow"
+        className="group w-full mt-6 inline-flex items-center justify-center gap-2.5 px-6 py-2.5 bg-white text-background font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
       >
-        {t("checkout.step2")} →
+        {t("checkout.step2")}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden>
+          <path d="M2 7h10M8 3l4 4-4 4" />
+        </svg>
       </button>
     </form>
   );

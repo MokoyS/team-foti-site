@@ -12,6 +12,7 @@ const nextConfig = {
       { protocol: "https", hostname: strapiHostname, pathname: "/uploads/**" },
       { protocol: "http", hostname: strapiHostname, pathname: "/uploads/**" },
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
+      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
     ],
   },
   // Désactive ESLint pendant le build pour accélérer (lance "npm run lint" à part ou en CI)

@@ -3,11 +3,11 @@
 import { ReactNode } from "react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { BackgroundBeams } from "@/components/ui/BackgroundBeams";
-
+import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
 interface RevealSectionProps {
   children: ReactNode;
   className?: string;
-  /** Affiche des beams discrets en arrière-plan */
+  /** Beams + grain + télémétrie discrets */
   beams?: boolean;
 }
 
@@ -18,8 +18,13 @@ export function RevealSection({
 }: RevealSectionProps) {
   return (
     <ScrollReveal className={`relative ${className}`}>
-      {beams && <BackgroundBeams />}
-      {children}
+      {beams && (
+        <>
+          <NoiseOverlay />
+          <BackgroundBeams />
+        </>
+      )}
+      <div className="relative z-10">{children}</div>
     </ScrollReveal>
   );
 }

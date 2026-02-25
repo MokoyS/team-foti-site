@@ -22,11 +22,13 @@ export function HeroBackground() {
           alt=""
           fill
           priority
-          className="object-cover opacity-50"
+          className="object-cover opacity-60"
           sizes="100vw"
         />
       </motion.div>
-      <div className="absolute inset-0 bg-background/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-background/40 pointer-events-none" aria-hidden />
+      {/* Fondu bas vers le noir pour fusionner avec la section suivante */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent pointer-events-none" aria-hidden />
     </div>
   );
 }

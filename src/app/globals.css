@@ -16,22 +16,38 @@
 html {
   overflow-x: hidden;
   overscroll-behavior-y: none;
+  /* Cache la scrollbar par défaut (à droite) : la piste à gauche (ScrollTrack) sert d’indicateur */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
+}
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-plus-jakarta-sans), system-ui, sans-serif;
+  font-family: var(--font-poppins), system-ui, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
+  /* Marges cohérentes mobile : pas de texte collé au bord */
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
 }
 
 @layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
   .text-balance {
     text-wrap: balance;
   }
   .font-heading {
-    font-family: var(--font-plus-jakarta-sans), system-ui, sans-serif;
+    font-family: var(--font-play), system-ui, sans-serif;
   }
   /* Glassmorphism (bordures 1px ultra-fines) */
   .glass {
@@ -56,6 +72,40 @@ body {
       linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
     background-size: 48px 48px;
   }
+  /* Texture grain très fine (noise) – aspect technique racing */
+  .bg-noise {
+    position: relative;
+  }
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* Séparateur : barre fine blanc / noir / blanc / noir */
+  .separator-stripe {
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.25) 0,
+      rgba(255,255,255,0.25) 2px,
+      rgba(0,0,0,0.3) 2px,
+      rgba(0,0,0,0.3) 4px
+    );
+  }
+  /* Overlay dark sur images pour mode sombre */
+  .img-overlay-dark {
+    position: relative;
+  }
+  .img-overlay-dark::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.75) 100%);
+    pointer-events: none;
+  }
 }
 
 /* Smooth scroll */
@@ -63,24 +113,3 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Glow – jaune / rouge */
-.btn-glow-yellow:hover {
-  box-shadow: 0 0 24px rgba(255, 215, 0, 0.45);
-  transition: box-shadow 0.3s ease;
-}
-.btn-glow-red:hover {
-  box-shadow: 0 0 24px rgba(255, 0, 0, 0.4);
-  transition: box-shadow 0.3s ease;
-}
-.btn-glow:hover {
-  box-shadow: 0 0 24px rgba(255, 215, 0, 0.5);
-  transition: box-shadow 0.3s ease;
-}
-
-/* Card glow (lueur derrière les cartes) */
-.card-glow-yellow:hover {
-  box-shadow: 0 0 40px -8px rgba(255, 215, 0, 0.25), 0 0 0 1px rgba(255, 215, 0, 0.1);
-}
-.card-glow-red:hover {
-  box-shadow: 0 0 40px -8px rgba(255, 0, 0, 0.2), 0 0 0 1px rgba(255, 0, 0, 0.08);
-}

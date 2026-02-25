@@ -9,22 +9,15 @@ interface GlowCardProps {
 }
 
 /**
- * Carte avec bordure fine et lueur au survol (jaune ou rouge).
+ * Carte sobre : bordure fine, hover discret (pas de glow).
  */
 export function GlowCard({
   children,
   className = "",
-  glow = "yellow",
 }: GlowCardProps) {
-  const glowClass =
-    glow === "yellow"
-      ? "card-glow-yellow hover:border-accent-yellow/30"
-      : glow === "red"
-        ? "card-glow-red hover:border-accent-red/25"
-        : "";
   return (
     <div
-      className={`rounded-xl border border-white/[0.08] bg-carbon-800/80 backdrop-blur-sm transition-all duration-300 ${glowClass} ${className}`}
+      className={`rounded-xl border border-white/[0.08] bg-carbon-800/80 backdrop-blur-sm transition-colors duration-200 hover:border-white/[0.14] ${className}`}
     >
       {children}
     </div>
