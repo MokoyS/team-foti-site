@@ -41,40 +41,38 @@ function Lightbox({
   }, [onClose]);
 
   return (
-    <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
-        onClick={onClose}
+        layoutId={`gallery-photo-${photo.src}`}
+        className="relative w-[min(90vw,900px)] aspect-[3/2] rounded-xl overflow-hidden shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
       >
-        <motion.div
-          layoutId={`gallery-photo-${photo.src}`}
-          className="relative w-[min(90vw,900px)] aspect-[3/2] rounded-xl overflow-hidden shadow-2xl"
-          onClick={(e) => e.stopPropagation()}
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          className="object-cover"
+          sizes="min(90vw, 900px)"
+          priority
+        />
+        <div className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-gradient-to-t from-black/80 to-transparent">
+          <p className="font-sans text-base font-medium text-white">{photo.caption}</p>
+        </div>
+        <button
+          onClick={onClose}
+          aria-label="Fermer"
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 flex items-center justify-center text-white hover:bg-black/80 transition"
         >
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            className="object-cover"
-            sizes="min(90vw, 900px)"
-            priority
-          />
-          <div className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-gradient-to-t from-black/80 to-transparent">
-            <p className="font-sans text-base font-medium text-white">{photo.caption}</p>
-          </div>
-          <button
-            onClick={onClose}
-            aria-label="Fermer"
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 flex items-center justify-center text-white hover:bg-black/80 transition"
-          >
-            ✕
-          </button>
-        </motion.div>
+          ✕
+        </button>
       </motion.div>
-    </AnimatePresence>
+    </motion.div>
   );
 }
 
@@ -141,7 +139,9 @@ export function GaleriePageContent() {
         </BentoGrid>
       </div>
 
-      {selected && <Lightbox photo={selected} onClose={() => setSelected(null)} />}
+      <AnimatePresence>
+        {selected && <Lightbox photo={selected} onClose={() => setSelected(null)} />}
+      </AnimatePresence>
     </main>
   );
 }
