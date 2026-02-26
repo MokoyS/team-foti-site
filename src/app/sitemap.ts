@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getProducts } from "@/lib/data/get-data";
+import { getProducts, getArticles } from "@/lib/data/get-data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "https://teamfoti.com";
@@ -11,16 +11,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/team`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/actualite`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${base}/cart`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-    { url: `${base}/checkout`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-    { url: `${base}/competition`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
-    { url: `${base}/competition/transferts`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
-    { url: `${base}/competition/palmares`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+    { url: `${base}/competition`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+    { url: `${base}/competition/transferts`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
+    { url: `${base}/competition/palmares`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/mentions-legales`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/cgv`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const products = await getProducts();
+  const [products, articles] = await Promise.all([getProducts(), getArticles()]);
+
   const productRoutes: MetadataRoute.Sitemap = products.map((p) => ({
     url: `${base}/shop/${p.slug}`,
     lastModified: new Date(),
@@ -28,5 +27,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...productRoutes];
+  const articleRoutes: MetadataRoute.Sitemap = articles
+    .filter((a) => a.slug)
+    .map((a) => ({
+      url: `${base}/actualite/${a.slug}`,
+      lastModified: new Date(a.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
+
+  return [...staticRoutes, ...productRoutes, ...articleRoutes];
 }
