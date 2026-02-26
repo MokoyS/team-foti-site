@@ -9,7 +9,6 @@ import { ParallaxGallery } from "@/components/home/ParallaxGallery";
 import { HomeContactSection } from "@/components/home/HomeContactSection";
 import { RevealSection } from "@/components/ui/RevealSection";
 import { RacingButton } from "@/components/ui/RacingButton";
-import { RacingSeparator } from "@/components/ui/RacingSeparator";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export const metadata: Metadata = {
