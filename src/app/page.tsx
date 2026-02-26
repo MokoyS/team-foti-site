@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
 import { FeaturedProductCard } from "@/components/home/FeaturedProductCard";
 import { ArticleCard } from "@/components/competition/ArticleCard";
@@ -10,6 +11,26 @@ import { RevealSection } from "@/components/ui/RevealSection";
 import { RacingButton } from "@/components/ui/RacingButton";
 import { RacingSeparator } from "@/components/ui/RacingSeparator";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+
+export const metadata: Metadata = {
+  title: "Team Foti | L'excellence du karting depuis 1978",
+  description:
+    "Écurie familiale fondée par Sébastien Foti. Champion d'Europe KZ2 et OK-Junior. Boutique karts, moteurs préparés, châssis Monster K. Loriol-sur-Drôme.",
+  openGraph: {
+    title: "Team Foti | Karting d'excellence depuis 1978",
+    description:
+      "Préparateur de champions. Boutique karts et pièces. De la compétition internationale à votre garage.",
+    url: "https://teamfoti.com",
+    siteName: "Team Foti",
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Team Foti | Karting d'excellence",
+    description: "Champion d'Europe. Boutique karts et pièces. Loriol-sur-Drôme.",
+  },
+};
 
 /** Données Strapi à la requête (pas au build) pour afficher les vrais produits en prod. */
 export const dynamic = "force-dynamic";
