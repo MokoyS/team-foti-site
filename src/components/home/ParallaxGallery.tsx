@@ -19,16 +19,13 @@ import Image from "next/image";
 export interface GalleryPhoto {
   src: string;
   alt: string;
-  /** Données télémétrie affichées en overlay */
   telemetry?: {
     lat?: string;
     speed?: string;
     rpm?: string;
     label?: string;
   };
-  /** Légende affichée au hover */
   caption?: string;
-  /** Couleur de la bordure glow : "yellow" | "red" (défaut : alterner) */
   glow?: "yellow" | "red";
 }
 
@@ -38,49 +35,71 @@ interface ParallaxGalleryProps {
 }
 
 // ---------------------------------------------------------------------------
-// Données placeholder (karting compétition) – remplacées par Strapi
+// Données placeholder
 // ---------------------------------------------------------------------------
 
 const PLACEHOLDER_PHOTOS: GalleryPhoto[] = [
   {
-    src: "/images home/kartrace.png",
-    alt: "Kart en course",
-    caption: "En piste — Team Foti",
+    src: "/Photos%20/resultats-podiums/21_OPENKART_Salbris_22022026-_T5A4369.jpg",
+    alt: "Open Kart Salbris 2026 — Team Foti en course",
+    caption: "Open Kart Salbris — Fév. 2026",
+    glow: "yellow",
+    telemetry: { label: "OPEN KART · SALBRIS", speed: "105", rpm: "14.800" },
   },
   {
-    src: "/images home/kartrace2.png",
-    alt: "Course karting",
-    caption: "Karting compétition",
+    src: "/Photos%20/Pilotes/Salbris%20Hugo.jpg",
+    alt: "Pilote Hugo en course à Salbris",
+    caption: "En course — Salbris",
+    glow: "red",
+    telemetry: { label: "KZ2 · SALBRIS", speed: "112", rpm: "15.200" },
   },
   {
-    src: "/images home/groupefoti.png",
-    alt: "Le groupe Team Foti",
-    caption: "Team Foti",
+    src: "/Photos%20/resultats-podiums/Podium%20Champ%20france.jpg",
+    alt: "Podium Championnat de France — Team Foti",
+    caption: "Podium — Champ. de France",
+    glow: "yellow",
+    telemetry: { label: "CHAMP. FRANCE · PODIUM" },
   },
   {
-    src: "/images home/hyzax.png",
-    alt: "Hyzax karting",
-    caption: "Hyzax — Partenaire",
+    src: "/Photos%20/Pilotes/Hugo%20Cesare%20Varennes%20-%20Copie.jpg",
+    alt: "Hugo et Cesare au Circuit de Varennes",
+    caption: "Circuit de Varennes",
+    glow: "red",
   },
   {
-    src: "/images home/hyzax2.png",
-    alt: "Hyzax en action",
-    caption: "Hyzax Racing",
+    src: "/Photos%20/Pilotes/Salbris%202.jpg",
+    alt: "Bataille en piste à Salbris — karting compétition",
+    caption: "Salbris — Bataille en piste",
+    glow: "yellow",
+    telemetry: { label: "ROTAX MAX · SALBRIS" },
+  },
+  {
+    src: "/Photos%20/Pilotes/Clement%20Salbris%20-%20Copie.jpg",
+    alt: "Clément en course à Salbris",
+    caption: "Clément — Salbris",
+    glow: "red",
+  },
+  {
+    src: "/Photos%20/resultats-podiums/Podium%20KArt%20MAg%20pers.jpeg",
+    alt: "Podium Kart Mag — Team Foti",
+    caption: "Podium — Kart Mag",
+    glow: "yellow",
+    telemetry: { label: "KART MAG · PODIUM" },
   },
 ];
 
+const SPEEDS = [-280, -180, 0, 180, 280];
+
 // ---------------------------------------------------------------------------
-// Sous-composant : carte photo avec tilt 3D
+// PhotoCard — tilt 3D au hover
 // ---------------------------------------------------------------------------
 
 function PhotoCard({
   photo,
-  index,
   x,
   blurAmount,
 }: {
   photo: GalleryPhoto;
-  index: number;
   x: ReturnType<typeof useMotionValue<number>>;
   blurAmount: ReturnType<typeof useSpring>;
 }) {
@@ -98,11 +117,6 @@ function PhotoCard({
     setTilt({ rotateX: -dy * 8, rotateY: dx * 8 });
   }
 
-  function onMouseLeave() {
-    setTilt({ rotateX: 0, rotateY: 0 });
-    setHovered(false);
-  }
-
   const blurFilter = useTransform(blurAmount, (v) => {
     const abs = Math.abs(v);
     return abs > 80 ? `blur(${Math.min((abs - 80) / 40, 4)}px)` : "blur(0px)";
@@ -115,34 +129,28 @@ function PhotoCard({
       className="relative shrink-0 w-[min(72vw,400px)] sm:w-[340px] md:w-[400px] lg:w-[440px] will-change-transform"
       onMouseMove={onMouseMove}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={onMouseLeave}
+      onMouseLeave={() => { setTilt({ rotateX: 0, rotateY: 0 }); setHovered(false); }}
     >
-      {/* Carte avec tilt 3D */}
       <motion.div
         animate={tilt}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         style={{ perspective: 800, transformStyle: "preserve-3d" }}
         className="rounded-lg overflow-hidden"
       >
-        {/* Image */}
         <div className="relative aspect-[3/2] bg-carbon-800 overflow-hidden rounded-lg">
-          <img
+          <Image
             src={photo.src}
             alt={photo.alt}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500"
+            fill
+            className="object-cover transition-transform duration-500"
             style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
-            loading="lazy"
-            decoding="async"
+            sizes="(max-width: 640px) 72vw, (max-width: 768px) 340px, (max-width: 1024px) 400px, 440px"
           />
-
-          {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10" />
-
-          {/* Légende hover */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 12 }}
-            transition={{ duration: 0.25 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
             className="absolute bottom-0 left-0 right-0 px-4 py-3 z-20 pointer-events-none"
           >
             <p className="font-sans text-sm font-medium text-white drop-shadow">
@@ -156,6 +164,25 @@ function PhotoCard({
 }
 
 // ---------------------------------------------------------------------------
+// ParallaxItem — un seul useTransform par composant (corrige la violation hooks)
+// ---------------------------------------------------------------------------
+
+function ParallaxItem({
+  photo,
+  speed,
+  scrollYProgress,
+  blurAmount,
+}: {
+  photo: GalleryPhoto;
+  speed: number;
+  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
+  blurAmount: ReturnType<typeof useSpring>;
+}) {
+  const x = useTransform(scrollYProgress, [0, 1], [-speed / 2, speed / 2]);
+  return <PhotoCard photo={photo} x={x} blurAmount={blurAmount} />;
+}
+
+// ---------------------------------------------------------------------------
 // Composant principal
 // ---------------------------------------------------------------------------
 
@@ -166,56 +193,41 @@ export function ParallaxGallery({ photos = PLACEHOLDER_PHOTOS, title }: Parallax
     offset: ["start end", "end start"],
   });
 
-  // Vitesse de scroll pour le motion blur
   const scrollVelocity = useVelocity(scrollYProgress);
   const blurAmount = useSpring(scrollVelocity, { stiffness: 80, damping: 20 });
 
-  // Chaque photo a une vitesse de déplacement X différente (effet parallax)
-  const speeds = [-280, -180, 0, 180, 280];
-  const xValues = speeds.map((speed) =>
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useTransform(scrollYProgress, [0, 1], [-speed / 2, speed / 2])
-  );
-
-  // Mobile : scroll horizontal natif (désactivé sur desktop)
-  const trackRef = useRef<HTMLDivElement>(null);
-
   return (
     <section ref={sectionRef} className="relative py-16 md:py-20 overflow-hidden">
-      {/* Header */}
       {title && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <SectionHeader eyebrow="GALLERY" title={title} />
         </div>
       )}
 
-      {/* ---- DESKTOP : parallax horizontal au scroll ---- */}
+      {/* DESKTOP : parallax */}
       <div className="hidden md:flex items-center justify-center gap-5 h-[320px] lg:h-[360px] relative">
         {photos.map((photo, i) => (
-          <PhotoCard
+          <ParallaxItem
             key={i}
             photo={photo}
-            index={i}
-            x={xValues[i % xValues.length]}
+            speed={SPEEDS[i % SPEEDS.length]}
+            scrollYProgress={scrollYProgress}
             blurAmount={blurAmount}
           />
         ))}
       </div>
 
-      {/* ---- MOBILE : stack vertical ---- */}
-      <div
-        ref={trackRef}
-        className="md:hidden flex flex-col gap-5 px-4"
-      >
+      {/* MOBILE : stack vertical */}
+      <div className="md:hidden flex flex-col gap-5 px-4">
         {photos.map((photo, i) => (
           <div key={i} className="relative rounded-lg overflow-hidden">
             <div className="relative aspect-[3/2] bg-carbon-800">
-              <img
+              <Image
                 src={photo.src}
                 alt={photo.alt}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) calc(100vw - 2rem)"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10" />
               <div className="absolute bottom-0 left-0 right-0 px-4 py-3">
@@ -226,7 +238,7 @@ export function ParallaxGallery({ photos = PLACEHOLDER_PHOTOS, title }: Parallax
         ))}
       </div>
 
-      {/* Gradient masques latéraux desktop */}
+      {/* Gradients masques latéraux desktop */}
       <div className="hidden md:block absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none z-20" />
       <div className="hidden md:block absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-20" />
     </section>
