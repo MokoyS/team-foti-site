@@ -88,7 +88,7 @@ const PLACEHOLDER_PHOTOS: GalleryPhoto[] = [
   },
 ];
 
-const SPEEDS = [-280, -180, 0, 180, 280];
+const SPEEDS = [-100, -60, 0, 60, 100];
 
 // ---------------------------------------------------------------------------
 // PhotoCard — tilt 3D au hover
@@ -178,7 +178,8 @@ function ParallaxItem({
   scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
   blurAmount: ReturnType<typeof useSpring>;
 }) {
-  const x = useTransform(scrollYProgress, [0, 1], [-speed / 2, speed / 2]);
+  const rawX = useTransform(scrollYProgress, [0, 1], [-speed / 2, speed / 2]);
+  const x = useSpring(rawX, { stiffness: 80, damping: 25 });
   return <PhotoCard photo={photo} x={x} blurAmount={blurAmount} />;
 }
 
