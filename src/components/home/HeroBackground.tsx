@@ -18,11 +18,13 @@ export function HeroBackground() {
         className="absolute top-0 left-0 right-0 h-[120%] w-full"
       >
         <Image
-          src="/hero.jpg"
+          src="/Photos%20/resultats-podiums/21_OPENKART_Salbris_22022026-_T5A4369.jpg"
           alt=""
+          aria-hidden
+          role="presentation"
           fill
           priority
-          className="object-cover opacity-60"
+          className="object-cover opacity-55"
           sizes="100vw"
         />
       </motion.div>
