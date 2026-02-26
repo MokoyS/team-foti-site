@@ -18,13 +18,13 @@ export function ScrollReveal({
   const y = direction === "up" ? 24 : -24;
   return (
     <motion.div
-      initial={{ opacity: 0, y, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{
         type: "spring",
-        stiffness: 100,
-        damping: 20,
+        stiffness: 80,
+        damping: 28,
         delay,
       }}
       className={className}
