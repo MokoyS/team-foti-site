@@ -65,7 +65,7 @@ export default async function Home() {
       <ParallaxGallery title="En piste" />
       <div className="mt-2 mb-10 text-center">
         <RacingButton href="/galerie" variant="yellow" arrow>
-          ACCÉDER À LA GALERIE
+          <TranslatedTitle translationKey="home.galleryCta" />
         </RacingButton>
       </div>
 
