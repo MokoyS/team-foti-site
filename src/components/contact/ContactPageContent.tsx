@@ -14,12 +14,10 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 function IconPin({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
     </svg>
   );
 }
-
 function IconPhone({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -27,21 +25,24 @@ function IconPhone({ className = "w-5 h-5" }: { className?: string }) {
     </svg>
   );
 }
-
 function IconMail({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
     </svg>
   );
 }
-
 function IconClock({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 6v6l4 2" />
+      <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
+    </svg>
+  );
+}
+function IconInstagram({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="2" y="2" width="20" height="20" rx="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
     </svg>
   );
 }
@@ -62,16 +63,16 @@ const CONTACT_ITEMS = [
     label: "GPS · ADRESSE",
     content: (
       <p className="text-foreground/90">
-        Loriol-sur-Drôme<span className="text-foreground/50">, France</span>
+        Loriol-sur-Drôme<span className="text-foreground/50">, France (26)</span>
       </p>
     ),
   },
   {
     icon: <IconPhone />,
-    label: "LIGNE DIRECTE",
+    label: "TEAM MANAGER · ALEXIS GARCIA",
     content: (
-      <a href="tel:+33475520000" className="text-foreground/90 hover:text-foreground transition tabular-nums">
-        +33 4 75 52 00 00
+      <a href="tel:+33475610000" className="text-foreground/90 hover:text-foreground transition tabular-nums">
+        Contactez l&apos;atelier directement
       </a>
     ),
   },
@@ -85,13 +86,25 @@ const CONTACT_ITEMS = [
     ),
   },
   {
+    icon: <IconInstagram />,
+    label: "INSTAGRAM",
+    content: (
+      <a
+        href="https://www.instagram.com/fotiteamracing/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-foreground/90 hover:text-accent-yellow transition"
+      >
+        @fotiteamracing
+      </a>
+    ),
+  },
+  {
     icon: <IconClock />,
     label: "HORAIRES · OUVERTURE",
     content: (
       <div>
-        <p className="text-foreground/80 tabular-nums">
-          Lun – Ven <span className="text-foreground/50">·</span> 09h00 – 18h00
-        </p>
+        <p className="text-foreground/80 tabular-nums">Lun – Ven <span className="text-foreground/50">·</span> 09h00 – 18h00</p>
         <p className="text-foreground/50 text-xs mt-1">Sur rendez-vous pour visites et essais</p>
       </div>
     ),
@@ -105,39 +118,36 @@ const SERVICES = [
         <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
       </svg>
     ),
-    title: "Préparation kart",
-    text: "Réglages châssis, moteur, carbu. De l'atelier à la piste.",
+    title: "Préparation moteur Foti",
+    text: "Des heures au banc d'essai. Chaque moteur sort de l'atelier de Sébastien Foti certifié à sa puissance maximale.",
   },
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+        <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
       </svg>
     ),
-    title: "Suivi compétition",
-    text: "Accompagnement complet sur les manches nationales et européennes.",
+    title: "Suivi compétition complet",
+    text: "Engagement, réglages piste, stratégie course, télémétrie. Alexis Garcia coordonne chaque manche pour votre pilote.",
   },
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-        <path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
       </svg>
     ),
-    title: "Boutique & pièces",
-    text: "Châssis, consommables, équipement pilote. Stock permanent.",
+    title: "Boutique Monster K & Foti",
+    text: "Châssis Monster K, moteurs préparés, consommables Lexoil et Vega. Le matériel qu'on utilise nous-mêmes.",
   },
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
         <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    title: "Formation jeunes",
-    text: "Programme pilotes dès 8 ans. Coaching technique et mental.",
+    title: "Formation Mini → KZ",
+    text: "Programme pilotes dès 8 ans. Coaching Enzo, Fred et Mallo. Nous avons formé les plus grands — votre enfant peut être le prochain.",
   },
 ];
 
@@ -154,27 +164,15 @@ function ContactHero() {
   return (
     <div ref={ref} className="relative h-[70vh] w-full overflow-hidden -mt-24 mb-0">
       <motion.div style={{ y }} className="absolute inset-0 h-[120%]">
-        <Image
-          src="/images home/hyzax2.png"
-          alt="Atelier Team Foti"
-          fill
-          priority
-          className="object-cover object-center opacity-50"
-          sizes="100vw"
-        />
+        <Image src="/images home/hyzax2.png" alt="Atelier Team Foti" fill priority className="object-cover object-center opacity-50" sizes="100vw" />
       </motion.div>
-
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/50" />
       <div className="absolute inset-0 bg-gradient-to-r from-background/70 to-transparent" />
-
-      <motion.div
-        style={{ opacity }}
-        className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-8 pb-16 max-w-5xl mx-auto"
-      >
+      <motion.div style={{ opacity }} className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-8 pb-16 max-w-5xl mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ type: "spring", stiffness: 80, damping: 18, delay: 0.15 }}
           className="font-mono text-[10px] tracking-[0.35em] uppercase text-accent-yellow mb-3 opacity-80"
         >
           Loriol-sur-Drôme · Drôme, France
@@ -185,8 +183,8 @@ function ContactHero() {
           transition={{ delay: 0.35, type: "spring", stiffness: 80, damping: 20 }}
           className="font-heading font-extrabold italic text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none"
         >
-          Parlons<br />
-          <span className="text-accent-yellow">performance.</span>
+          L&apos;atelier est ouvert.<br />
+          <span className="text-accent-yellow">La performance n&apos;attend pas.</span>
         </motion.h1>
       </motion.div>
     </div>
@@ -213,8 +211,8 @@ export function ContactPageContent() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <div className="space-y-6">
               {[
-                "L'excellence technique ne prend pas de rendez-vous. Que vous soyez pilote professionnel, amateur passionné ou structure en quête d'un partenaire sérieux — notre atelier vous répond.",
-                "Contactez-nous pour un devis préparation, un suivi compétition ou simplement pour nous parler de votre prochain départ.",
+                "L'atelier est ouvert. Que vous soyez pilote professionnel, amateur passionné ou structure en quête d'un partenaire sérieux — Alexis Garcia vous répond directement.",
+                "Contactez-nous pour un devis préparation Monster K, un moteur Foti Prep, ou simplement pour parler de votre prochain départ en compétition.",
               ].map((p, i) => (
                 <motion.p
                   key={i}
@@ -239,14 +237,14 @@ export function ContactPageContent() {
               className="space-y-6"
             >
               <p className="text-foreground/80 text-base sm:text-lg leading-relaxed">
-                Depuis 40 ans, nous cultivons une relation directe avec nos pilotes. Pas d&apos;intermédiaire — Marco ou Luca Foti vous répondent personnellement.
+                Depuis 1978, nous cultivons une relation directe avec nos pilotes. Sébastien Foti a bâti cette réputation sur la transparence et le résultat. Alexis Garcia continue dans le même esprit.
               </p>
               <blockquote className="border-l-2 border-accent-yellow pl-5 py-1">
                 <p className="font-heading italic text-xl text-foreground/90 leading-snug">
                   &laquo;&nbsp;Un coup de fil suffit. On est là.&nbsp;&raquo;
                 </p>
                 <footer className="font-mono text-[10px] tracking-widest uppercase text-foreground/40 mt-2">
-                  Marco Foti · Directeur Technique
+                  Alexis Garcia · Team Manager
                 </footer>
               </blockquote>
             </motion.div>
@@ -266,7 +264,6 @@ export function ContactPageContent() {
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
             className="rounded-xl border border-white/[0.1] bg-carbon-800/80 overflow-hidden"
           >
-            {/* Barre LCD */}
             <div className="px-4 py-2.5 border-b border-white/[0.08] flex items-center gap-2 bg-black/30">
               <span className="w-2 h-2 rounded-full bg-accent-red/90 animate-pulse" />
               <span className="w-2 h-2 rounded-full bg-accent-yellow/80" />
@@ -275,7 +272,6 @@ export function ContactPageContent() {
                 COORDONNÉES · TEAM FOTI
               </span>
             </div>
-
             <div className="divide-y divide-white/[0.06]">
               {CONTACT_ITEMS.map(({ icon, label, content }, i) => (
                 <motion.div
@@ -298,6 +294,33 @@ export function ContactPageContent() {
               ))}
             </div>
           </motion.div>
+
+          {/* Liens réseaux sociaux */}
+          <motion.div
+            custom={0}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex flex-wrap gap-3 mt-6"
+          >
+            {[
+              { label: "Instagram", href: "https://www.instagram.com/fotiteamracing/", icon: "IG" },
+              { label: "Facebook", href: "https://www.facebook.com/TeamFoti/", icon: "FB" },
+              { label: "LinkedIn", href: "https://www.linkedin.com/company/team-foti/", icon: "LI" },
+            ].map(({ label, href, icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-lg border border-white/[0.08] text-foreground/60 font-mono text-xs uppercase tracking-wider hover:border-accent-yellow/40 hover:text-accent-yellow transition-all duration-200"
+              >
+                <span className="font-heading font-bold text-accent-yellow/70">{icon}</span>
+                {label}
+              </a>
+            ))}
+          </motion.div>
         </section>
 
         {/* --- Services --- */}
@@ -305,7 +328,6 @@ export function ContactPageContent() {
           <ScrollReveal>
             <SectionHeader eyebrow="SERVICES" title="Ce qu'on fait pour vous" />
           </ScrollReveal>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {SERVICES.map(({ icon, title, text }, i) => (
               <motion.div
@@ -321,9 +343,7 @@ export function ContactPageContent() {
                   {icon}
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold italic text-foreground tracking-tight mb-2">
-                    {title}
-                  </h3>
+                  <h3 className="font-heading font-bold italic text-foreground tracking-tight mb-2">{title}</h3>
                   <p className="text-foreground/60 text-sm leading-relaxed">{text}</p>
                 </div>
               </motion.div>
@@ -334,18 +354,10 @@ export function ContactPageContent() {
         {/* --- Photo --- */}
         <ScrollReveal>
           <div className="relative rounded-xl overflow-hidden aspect-[21/9] mb-16 md:mb-24">
-            <Image
-              src="/images home/kartrace.png"
-              alt="Team Foti atelier"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1280px) 100vw, 1280px"
-            />
+            <Image src="/Photos%20/resultats-podiums/Podium%20KArt%20MAg%20pers.jpeg" alt="Podium Kart Mag — Team Foti" fill className="object-cover object-top" sizes="(max-width: 1280px) 100vw, 1280px" />
             <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/40" />
             <div className="absolute bottom-6 left-8">
-              <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/30">
-                Loriol-sur-Drôme — Team Foti
-              </span>
+              <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/30">Podium Kart Mag — Team Foti</span>
             </div>
           </div>
         </ScrollReveal>
@@ -353,38 +365,24 @@ export function ContactPageContent() {
         {/* --- CTA final --- */}
         <ScrollReveal>
           <div className="relative rounded-2xl overflow-hidden mb-24">
-            <Image
-              src="/images home/hyzax.png"
-              alt="Hyzax Team Foti"
-              fill
-              className="object-cover opacity-40"
-              sizes="(max-width: 1280px) 100vw, 1280px"
-            />
+            <Image src="/images home/hyzax.png" alt="Hyzax Team Foti" fill className="object-cover opacity-40" sizes="(max-width: 1280px) 100vw, 1280px" />
             <div className="absolute inset-0 bg-gradient-to-b from-carbon-800/80 to-background/95" />
             <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-8 p-10 sm:p-14">
               <div>
-                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-accent-yellow mb-2 opacity-70">
-                  Votre prochain départ
-                </p>
+                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-accent-yellow mb-2 opacity-70">Votre prochain départ</p>
                 <h2 className="font-heading font-extrabold italic text-2xl sm:text-3xl text-white leading-snug">
                   Prêt à passer<br />
                   <span className="text-accent-yellow">à la vitesse supérieure ?</span>
                 </h2>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 shrink-0">
-                <Link
-                  href="/shop"
-                  className="group inline-flex items-center gap-2.5 px-6 py-3 bg-white text-background font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
-                >
+                <Link href="/shop" className="group inline-flex items-center gap-2.5 px-6 py-3 bg-white text-background font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:bg-white/90 active:scale-[0.98]">
                   Voir la boutique
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden>
                     <path d="M2 7h10M8 3l4 4-4 4" />
                   </svg>
                 </Link>
-                <Link
-                  href="/team"
-                  className="group inline-flex items-center gap-2.5 px-6 py-3 border border-white/20 text-foreground/80 font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:border-white/40 hover:bg-white/[0.04] active:scale-[0.98]"
-                >
+                <Link href="/team" className="group inline-flex items-center gap-2.5 px-6 py-3 border border-white/20 text-foreground/80 font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:border-white/40 hover:bg-white/[0.04] active:scale-[0.98]">
                   L'équipe
                 </Link>
               </div>

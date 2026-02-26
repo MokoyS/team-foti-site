@@ -7,16 +7,17 @@ import { useRef } from "react";
 import { Timeline, type TimelineItem } from "@/components/ui/Timeline";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { wallOfFame } from "@/lib/data/team";
 
 // ---------------------------------------------------------------------------
 // Data
 // ---------------------------------------------------------------------------
 
 const STATS = [
-  { value: "40", unit: "ans", label: "d'existence" },
+  { value: "1978", unit: "", label: "Fondation" },
+  { value: "46", unit: "ans", label: "d'existence" },
   { value: "2", unit: "×", label: "Champion d'Europe" },
-  { value: "1984", unit: "", label: "Fondation" },
-  { value: "2", unit: "gen.", label: "Famille Foti" },
+  { value: "3", unit: "gen.", label: "Passion Foti" },
 ];
 
 const VALUES = [
@@ -26,8 +27,8 @@ const VALUES = [
         <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
       </svg>
     ),
-    title: "Expertise technique",
-    text: "40 ans de réglages, de moteurs préparés et de trajectoires optimisées. Notre savoir-faire est transmis de génération en génération.",
+    title: "Expertise moteur",
+    text: "Sébastien Foti a consacré 46 ans à la préparation moteur. Chaque bloc sort du banc d'essai avec une puissance certifiée — aucun compromis.",
   },
   {
     icon: (
@@ -35,8 +36,8 @@ const VALUES = [
         <circle cx="12" cy="8" r="6" /><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
       </svg>
     ),
-    title: "Palmarès européen",
-    text: "Champion d'Europe KZ2 en 2019, Champion d'Europe OK-Junior en 2024. Nos couleurs ont brillé sur les plus grands circuits du continent.",
+    title: "Palmarès continental",
+    text: "Champion d'Europe KZ2, OK et OK-Junior. Nos pilotes ont porté nos couleurs aux sommets de la compétition internationale depuis les circuits CIK/FIA.",
   },
   {
     icon: (
@@ -44,8 +45,8 @@ const VALUES = [
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    title: "Accompagnement",
-    text: "Du pilote professionnel au père de famille : nous adaptons notre suivi à chaque profil. Technique, logistique, équipement — tout sous un même toit.",
+    title: "Formation pilotes",
+    text: "Nous travaillons avec la FFSA pour former les jeunes talents. De la catégorie Mini à la KZ, notre pôle coaching accompagne chaque pilote vers son meilleur niveau.",
   },
   {
     icon: (
@@ -53,41 +54,46 @@ const VALUES = [
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
       </svg>
     ),
-    title: "Ancrage local",
-    text: "Basés à Loriol-sur-Drôme depuis 1984, nous sommes une institution du karting régional et national, reconnue bien au-delà des frontières françaises.",
+    title: "Ancrage régional",
+    text: "Basés près de Lyon, actifs sur la piste Actua et dans la Ligue Rhône-Alpes. Une présence locale forte avec un rayonnement national et européen.",
   },
 ];
 
 const TIMELINE: TimelineItem[] = [
   {
-    year: "1984",
-    title: "Fondation à Loriol-sur-Drôme",
-    description: "Création de la structure familiale Foti. Premiers karts préparés en Drôme. Début d'une aventure tournée vers la compétition et le service aux pilotes.",
+    year: "1978",
+    title: "Fondation par Sébastien Foti",
+    description: "Sébastien Foti commence à préparer ses propres karts par passion de la mécanique. Ce défi personnel devient rapidement une quête de puissance absolue qui fonde la réputation de l'écurie.",
   },
   {
-    year: "1992",
-    title: "Premiers titres nationaux",
-    description: "Les pilotes Foti s'imposent en France. L'atelier devient une référence pour les réglages châssis et la préparation moteur.",
+    year: "1990s",
+    title: "L'atelier devient une référence",
+    description: "La maîtrise de la préparation moteur attire les meilleurs pilotes de la région. L'atelier Foti s'impose comme une référence incontournable. Des noms comme Fisichella et Panis débutent leur carrière dans notre structure.",
   },
   {
-    year: "2005",
-    title: "Ouverture européenne",
-    description: "Participation aux championnats WSK et CIK. Développement des outils de télémétrie et des réglages fine piste.",
+    year: "2000s",
+    title: "Import PCR & ouverture nationale",
+    description: "L'écurie importe la marque PCR, élargissant son offre châssis. Participation croissante aux championnats nationaux. Le nom Foti résonne bien au-delà de Rhône-Alpes.",
   },
   {
     year: "2012",
-    title: "Extension de la boutique",
-    description: "Ouverture d'une boutique complète de pièces et consommables karting. L'offre s'étend aux pilotes amateurs et aux familles.",
+    title: "Alexis Garcia, Team Manager",
+    description: "Alexis Garcia prend les rênes de la gestion sportive. L'écurie s'étend, structure sa formation jeunes et renforce ses partenariats techniques.",
   },
   {
     year: "2019",
     title: "Champion d'Europe KZ2 — Lonato",
-    description: "Couronnement européen en KZ2. La Team Foti confirme son statut de préparateur de pointe sur la scène internationale.",
+    description: "Couronnement européen en KZ2 sur le circuit de Lonato. La Team Foti confirme son statut de préparateur de pointe sur la scène internationale.",
+  },
+  {
+    year: "2022",
+    title: "Monster K & Yuri Serafini",
+    description: "Développement du châssis Monster K en partenariat avec Yuri Serafini. Un châssis conçu spécifiquement pour les réglages Foti, disponible en exclusivité chez l'écurie.",
   },
   {
     year: "2024",
     title: "Champion d'Europe OK-Junior",
-    description: "Nouveau titre continental. L'écurie poursuit son engagement en formation jeunes pilotes et en compétition de haut niveau.",
+    description: "Nouveau titre continental. L'aventure familiale continue, portée par la même exigence qu'en 1978 — et l'ambition intacte de dominer les circuits du monde entier.",
   },
 ];
 
@@ -106,7 +112,7 @@ const fadeUp: Variants = {
 };
 
 // ---------------------------------------------------------------------------
-// Composant Hero de page
+// Hero
 // ---------------------------------------------------------------------------
 
 function AboutHero() {
@@ -117,7 +123,6 @@ function AboutHero() {
 
   return (
     <div ref={ref} className="relative h-[70vh] w-full overflow-hidden -mt-24 mb-0">
-      {/* Image parallax */}
       <motion.div style={{ y }} className="absolute inset-0 h-[120%]">
         <Image
           src="/images home/groupefoti.png"
@@ -129,11 +134,9 @@ function AboutHero() {
         />
       </motion.div>
 
-      {/* Gradients */}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/50" />
       <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
 
-      {/* Texte */}
       <motion.div
         style={{ opacity }}
         className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-8 pb-16 max-w-5xl mx-auto"
@@ -141,10 +144,10 @@ function AboutHero() {
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ type: "spring", stiffness: 80, damping: 18, delay: 0.15 }}
           className="font-mono text-[10px] tracking-[0.35em] uppercase text-accent-yellow mb-3 opacity-80"
         >
-          Loriol-sur-Drôme · Fondé en 1984
+          Fondé en 1978 · Sébastien Foti
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
@@ -167,7 +170,6 @@ function AboutHero() {
 export function AboutPageContent() {
   return (
     <div className="min-h-screen bg-background bg-carbon-texture">
-      {/* Hero */}
       <AboutHero />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
@@ -181,8 +183,8 @@ export function AboutPageContent() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <div className="space-y-6">
               {[
-                "Quarante ans que nous poussons les trajectoires au millimètre. Depuis Loriol-sur-Drôme, la Team Foti est devenue une référence européenne : pas par hasard, mais par la rigueur du réglage, la précision des chronos et la confiance des pilotes.",
-                "Nous sommes préparateurs de champions. Notre héritage familial repose sur une règle simple : la performance se construit à l'atelier avant de s'exprimer en piste. Châssis, carbu, grip, télémétrie — chaque détail compte.",
+                "Tout a commencé il y a près de 50 ans. Sébastien Foti, passionné de mécanique, commence à préparer ses propres karts. Ce qui n'était qu'un défi personnel devient une quête de puissance absolue.",
+                "De fil en aiguille, son talent et son exigence font de son nom une icône mondiale du Karting. Sébastien Foti n'est pas qu'un préparateur ; c'est un architecte de la performance.",
               ].map((p, i) => (
                 <motion.p
                   key={i}
@@ -207,15 +209,14 @@ export function AboutPageContent() {
               className="space-y-6"
             >
               <p className="text-foreground/80 text-base sm:text-lg leading-relaxed">
-                De la WSK au Championnat d&apos;Europe, nos couleurs ont croisé celles des plus grandes écuries. Aujourd&apos;hui, nous mettons cette expertise au service du pilote du dimanche comme du professionnel. L&apos;excellence technique ne se démode pas.
+                Aujourd&apos;hui, la relève est en piste. Alexis Garcia et son cousin Enzo portent l&apos;héritage avec la même ferveur. De l&apos;importation de la marque PCR dans les années 2000 au développement actuel des châssis Monster K avec Yuri Serafini, l&apos;aventure continue. Notre palmarès parle pour nous.
               </p>
-              {/* Citation */}
               <blockquote className="border-l-2 border-accent-yellow pl-5 py-1">
                 <p className="font-heading italic text-xl text-foreground/90 leading-snug">
                   &laquo;&nbsp;La performance se construit à l&apos;atelier avant de s&apos;exprimer en piste.&nbsp;&raquo;
                 </p>
                 <footer className="font-mono text-[10px] tracking-widest uppercase text-foreground/40 mt-2">
-                  Team Foti
+                  Sébastien Foti · Fondateur
                 </footer>
               </blockquote>
             </motion.div>
@@ -282,20 +283,61 @@ export function AboutPageContent() {
         <ScrollReveal>
           <div className="relative rounded-xl overflow-hidden aspect-[21/9] mb-16 md:mb-24">
             <Image
-              src="/images home/kartrace.png"
-              alt="Karting Team Foti en piste"
+              src="/Photos%20/resultats-podiums/21_OPENKART_Salbris_22022026-_T5A4369.jpg"
+              alt="Open Kart Salbris 2026 — Team Foti"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 1280px) 100vw, 1280px"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/40" />
             <div className="absolute bottom-6 left-8">
               <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/30">
-                En compétition — Team Foti
+                Open Kart Salbris — Fév. 2026
               </span>
             </div>
           </div>
         </ScrollReveal>
+
+        {/* --- Wall of Fame --- */}
+        <section className="pb-16 md:pb-24">
+          <ScrollReveal>
+            <SectionHeader eyebrow="WALL OF FAME" title="Nos pilotes emblématiques" />
+            <p className="text-foreground/40 text-sm font-mono mb-10 -mt-4">
+              Ils ont porté nos couleurs. Ils ont forgé notre légende.
+            </p>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {wallOfFame.map(({ name, years, category }, i) => (
+              <motion.div
+                key={name}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-30px" }}
+                className="group flex items-center gap-4 p-5 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:border-accent-yellow/30 hover:bg-accent-yellow/[0.03] transition-all duration-300"
+              >
+                <div className="shrink-0 w-10 h-10 rounded-lg bg-accent-yellow/10 border border-accent-yellow/20 flex items-center justify-center">
+                  <span className="font-heading font-bold text-accent-yellow text-xs">
+                    {name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-heading font-bold italic text-foreground text-sm truncate group-hover:text-accent-yellow transition-colors">
+                    {name}
+                  </p>
+                  <p className="font-mono text-[10px] text-foreground/40 uppercase tracking-wider mt-0.5">
+                    {category} · {years}
+                  </p>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 text-accent-yellow/50 group-hover:text-accent-yellow transition-colors" aria-hidden>
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </motion.div>
+            ))}
+          </div>
+        </section>
 
         {/* --- Timeline --- */}
         <section className="pb-16 md:pb-24">
