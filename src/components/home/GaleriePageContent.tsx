@@ -40,6 +40,11 @@ function Lightbox({
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -58,7 +63,7 @@ function Lightbox({
           alt={photo.alt}
           fill
           className="object-cover"
-          sizes="min(90vw, 900px)"
+          sizes="(max-width: 960px) 90vw, 900px"
           priority
         />
         <div className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-gradient-to-t from-black/80 to-transparent">
@@ -100,7 +105,7 @@ function PhotoTile({
           src={photo.src}
           alt={photo.alt}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover"
           sizes={
             colSpan === 2
               ? "(max-width: 768px) 100vw, 66vw"
