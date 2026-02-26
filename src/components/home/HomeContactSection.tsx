@@ -22,10 +22,10 @@ export function HomeContactSection() {
         >
           {/* Image fond */}
           <Image
-            src="/images home/kartrace.png"
-            alt="Team Foti en piste"
+            src="/Photos%20/resultats-podiums/Podium%20Champ%20france.jpg"
+            alt="Team Foti — Podium Championnat de France"
             fill
-            className="object-cover object-center"
+            className="object-cover object-top"
             sizes="(max-width: 1280px) 100vw, 1280px"
           />
 
@@ -43,7 +43,7 @@ export function HomeContactSection() {
               <span className="text-accent-yellow">On vous répond.</span>
             </h3>
             <p className="text-white/60 text-sm mb-8 leading-relaxed">
-              Atelier, boutique, compétition — l'équipe Foti est disponible pour vous accompagner.
+              Atelier, boutique, compétition — l&apos;équipe Foti est disponible pour vous accompagner.
             </p>
 
             <Link

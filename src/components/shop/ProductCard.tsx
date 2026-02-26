@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Product } from "@/lib/data/products";
-import { useLocale } from "@/contexts/LocaleContext";
 
 interface ProductCardProps {
   product: Product;
@@ -31,7 +30,6 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 };
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
-  const { t } = useLocale();
   const inStock = product.stock > 0;
   const icon = CATEGORY_ICONS[product.category] ?? CATEGORY_ICONS["Consommables"];
 

@@ -383,7 +383,7 @@ export function ContactPageContent() {
                   </svg>
                 </Link>
                 <Link href="/team" className="group inline-flex items-center gap-2.5 px-6 py-3 border border-white/20 text-foreground/80 font-heading font-semibold text-sm rounded-lg transition-all duration-200 hover:border-white/40 hover:bg-white/[0.04] active:scale-[0.98]">
-                  L'équipe
+                  L&apos;équipe
                 </Link>
               </div>
             </div>
