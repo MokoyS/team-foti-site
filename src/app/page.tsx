@@ -63,7 +63,11 @@ export default async function Home() {
 
       {/* Galerie parallax */}
       <ParallaxGallery title="En piste" />
-
+      <div className="mt-2 mb-10 text-center">
+        <RacingButton href="/galerie" variant="yellow" arrow>
+          ACCÉDER À LA GALERIE
+        </RacingButton>
+      </div>
 
       {/* Actualité */}
       <RevealSection beams>
