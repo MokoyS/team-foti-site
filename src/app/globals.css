@@ -14,7 +14,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior-y: none;
   /* Cache la scrollbar par défaut (à droite) : la piste à gauche (ScrollTrack) sert d’indicateur */
   scrollbar-width: none; /* Firefox */
@@ -28,7 +28,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-poppins), system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   min-height: 100vh;
   /* Marges cohérentes mobile : pas de texte collé au bord */
   padding-left: env(safe-area-inset-left, 0);

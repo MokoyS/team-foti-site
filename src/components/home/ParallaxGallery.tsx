@@ -3,14 +3,15 @@
 import {
   useScroll,
   useTransform,
-  useVelocity,
   useSpring,
+  useVelocity,
+  useReducedMotion,
   motion,
-  useMotionValue,
+  MotionValue,
 } from "framer-motion";
-import { SectionHeader } from "@/components/ui/SectionHeader";
-import { useRef, useState } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import Image from "next/image";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -19,23 +20,33 @@ import Image from "next/image";
 export interface GalleryPhoto {
   src: string;
   alt: string;
-  telemetry?: {
-    lat?: string;
-    speed?: string;
-    rpm?: string;
-    label?: string;
-  };
   caption?: string;
+  aspect?: "portrait" | "landscape" | "square";
   glow?: "yellow" | "red";
 }
 
-interface ParallaxGalleryProps {
-  photos?: GalleryPhoto[];
-  title?: string;
-}
+// ---------------------------------------------------------------------------
+// Layout constants
+// ---------------------------------------------------------------------------
+
+const DIMS = {
+  portrait:  { w: 280, h: 420 },
+  landscape: { w: 460, h: 310 },
+  square:    { w: 340, h: 340 },
+} as const;
+
+const DEFAULT_ASPECTS: Array<keyof typeof DIMS> = [
+  "portrait", "landscape", "square",
+  "portrait", "landscape", "square",
+  "portrait",
+];
+
+const GAP = 28;
+const SIDE_PAD = 100;
+const SECTION_VH = 400;
 
 // ---------------------------------------------------------------------------
-// Données placeholder
+// Placeholder photos
 // ---------------------------------------------------------------------------
 
 const PLACEHOLDER_PHOTOS: GalleryPhoto[] = [
@@ -44,21 +55,18 @@ const PLACEHOLDER_PHOTOS: GalleryPhoto[] = [
     alt: "Open Kart Salbris 2026 — Team Foti en course",
     caption: "Open Kart Salbris — Fév. 2026",
     glow: "yellow",
-    telemetry: { label: "OPEN KART · SALBRIS", speed: "105", rpm: "14.800" },
   },
   {
     src: "/Photos%20/Pilotes/Salbris%20Hugo.jpg",
     alt: "Pilote Hugo en course à Salbris",
     caption: "En course — Salbris",
     glow: "red",
-    telemetry: { label: "KZ2 · SALBRIS", speed: "112", rpm: "15.200" },
   },
   {
     src: "/Photos%20/resultats-podiums/Podium%20Champ%20france.jpg",
     alt: "Podium Championnat de France — Team Foti",
     caption: "Podium — Champ. de France",
     glow: "yellow",
-    telemetry: { label: "CHAMP. FRANCE · PODIUM" },
   },
   {
     src: "/Photos%20/Pilotes/Hugo%20Cesare%20Varennes%20-%20Copie.jpg",
@@ -71,7 +79,6 @@ const PLACEHOLDER_PHOTOS: GalleryPhoto[] = [
     alt: "Bataille en piste à Salbris — karting compétition",
     caption: "Salbris — Bataille en piste",
     glow: "yellow",
-    telemetry: { label: "ROTAX MAX · SALBRIS" },
   },
   {
     src: "/Photos%20/Pilotes/Clement%20Salbris%20-%20Copie.jpg",
@@ -84,164 +91,242 @@ const PLACEHOLDER_PHOTOS: GalleryPhoto[] = [
     alt: "Podium Kart Mag — Team Foti",
     caption: "Podium — Kart Mag",
     glow: "yellow",
-    telemetry: { label: "KART MAG · PODIUM" },
   },
 ];
 
-const SPEEDS = [-100, -60, 0, 60, 100];
-
 // ---------------------------------------------------------------------------
-// PhotoCard — tilt 3D au hover
+// Utility: compute total rail width in px
 // ---------------------------------------------------------------------------
 
-function PhotoCard({
+function computeTotalWidth(photos: GalleryPhoto[]): number {
+  if (photos.length === 0) return 0;
+  const cardsWidth = photos.reduce((acc, p, i) => {
+    const aspect = p.aspect ?? DEFAULT_ASPECTS[i % DEFAULT_ASPECTS.length];
+    return acc + DIMS[aspect].w + GAP;
+  }, 0) - GAP; // remove trailing gap
+  return cardsWidth + SIDE_PAD * 2;
+}
+
+// ---------------------------------------------------------------------------
+// HCard — individual card with Y/rotate parallax
+// NOTE: each HCard creates 4 MotionValues. Fine for ≤10 cards; profile before scaling.
+// ---------------------------------------------------------------------------
+
+function HCard({
   photo,
-  x,
-  blurAmount,
+  index,
+  scrollYProgress,
+  reduceMotion,
 }: {
   photo: GalleryPhoto;
-  x: ReturnType<typeof useMotionValue<number>>;
-  blurAmount: ReturnType<typeof useSpring>;
+  index: number;
+  scrollYProgress: MotionValue<number>;
+  reduceMotion: boolean;
 }) {
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
-  const [hovered, setHovered] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const aspect = photo.aspect ?? DEFAULT_ASPECTS[index % DEFAULT_ASPECTS.length];
+  const { w, h } = DIMS[aspect];
+  const dir = index % 2 === 0 ? 1 : -1;
 
-  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);
-    const dy = (e.clientY - cy) / (rect.height / 2);
-    setTilt({ rotateX: -dy * 8, rotateY: dx * 8 });
-  }
+  const rawY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduceMotion ? [0, 0] : [dir * -45, dir * 45]
+  );
+  const y = useSpring(rawY, { stiffness: 70, damping: 28 });
 
-  const blurFilter = useTransform(blurAmount, (v) => {
-    const abs = Math.abs(v);
-    return abs > 80 ? `blur(${Math.min((abs - 80) / 40, 4)}px)` : "blur(0px)";
-  });
+  const rawRotate = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    reduceMotion ? [0, 0, 0] : [dir * -2, 0, dir * 2]
+  );
+  const rotate = useSpring(rawRotate, { stiffness: 55, damping: 22 });
+
+  const accentColor = photo.glow === "yellow" ? "#FFD700" : "#FF0000";
+  const glowShadow =
+    photo.glow === "yellow"
+      ? "0 0 36px -4px rgba(255,215,0,0.28)"
+      : "0 0 36px -4px rgba(255,0,0,0.22)";
 
   return (
     <motion.div
-      ref={cardRef}
-      style={{ x, filter: blurFilter }}
-      className="relative shrink-0 w-[min(72vw,400px)] sm:w-[340px] md:w-[400px] lg:w-[440px] will-change-transform"
-      onMouseMove={onMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setTilt({ rotateX: 0, rotateY: 0 }); setHovered(false); }}
+      style={{ y, rotate, width: w, height: h, boxShadow: glowShadow }}
+      className="relative shrink-0 rounded-xl overflow-hidden will-change-transform"
+      whileHover={reduceMotion ? undefined : { scale: 1.04, transition: { type: "spring", stiffness: 320, damping: 22 } }}
     >
-      <motion.div
-        animate={tilt}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        style={{ perspective: 800, transformStyle: "preserve-3d" }}
-        className="rounded-lg overflow-hidden"
-      >
-        <div className="relative aspect-[3/2] bg-carbon-800 overflow-hidden rounded-lg">
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            className="object-cover transition-transform duration-500"
-            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
-            sizes="(max-width: 640px) 72vw, (max-width: 768px) 340px, (max-width: 1024px) 400px, 440px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10" />
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 12 }}
-            transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className="absolute bottom-0 left-0 right-0 px-4 py-3 z-20 pointer-events-none"
-          >
-            <p className="font-sans text-sm font-medium text-white drop-shadow">
-              {photo.caption ?? photo.alt}
-            </p>
-          </motion.div>
-        </div>
-      </motion.div>
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        className="object-cover"
+        sizes={`${w}px`}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/15 pointer-events-none" />
+
+      {/* Caption — slides up on hover */}
+      {photo.caption && (
+        <motion.div
+          initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 10 }}
+          whileHover={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 28 }}
+          className="absolute bottom-0 left-0 right-0 px-4 py-3 z-10 pointer-events-none"
+        >
+          <p className="font-sans text-sm font-semibold text-white drop-shadow-md">
+            {photo.caption}
+          </p>
+        </motion.div>
+      )}
+
+      {/* Corner accent lines — top-left and bottom-right */}
+      <div
+        className="absolute top-3 left-3 w-6 h-6 pointer-events-none"
+        style={{ borderTop: `2px solid ${accentColor}`, borderLeft: `2px solid ${accentColor}`, opacity: 0.7 }}
+      />
+      <div
+        className="absolute bottom-3 right-3 w-6 h-6 pointer-events-none"
+        style={{ borderBottom: `2px solid ${accentColor}`, borderRight: `2px solid ${accentColor}`, opacity: 0.7 }}
+      />
     </motion.div>
   );
 }
 
 // ---------------------------------------------------------------------------
-// ParallaxItem — un seul useTransform par composant (corrige la violation hooks)
+// ParallaxGallery — main export (API unchanged)
 // ---------------------------------------------------------------------------
 
-function ParallaxItem({
-  photo,
-  speed,
-  scrollYProgress,
-  blurAmount,
+export function ParallaxGallery({
+  photos = PLACEHOLDER_PHOTOS,
+  title,
 }: {
-  photo: GalleryPhoto;
-  speed: number;
-  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
-  blurAmount: ReturnType<typeof useSpring>;
+  photos?: GalleryPhoto[];
+  title?: string;
 }) {
-  const rawX = useTransform(scrollYProgress, [0, 1], [-speed / 2, speed / 2]);
-  const x = useSpring(rawX, { stiffness: 80, damping: 25 });
-  return <PhotoCard photo={photo} x={x} blurAmount={blurAmount} />;
-}
-
-// ---------------------------------------------------------------------------
-// Composant principal
-// ---------------------------------------------------------------------------
-
-export function ParallaxGallery({ photos = PLACEHOLDER_PHOTOS, title }: ParallaxGalleryProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const shouldReduce = useReducedMotion() ?? false;
+
+  // Init to 0; gallery won't scroll until viewport is measured — avoids layout shift
+  const [vw, setVw] = useState(0);
+  useEffect(() => {
+    const update = () => setVw(window.innerWidth);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"],
+    offset: ["start start", "end end"],
   });
 
-  const scrollVelocity = useVelocity(scrollYProgress);
-  const blurAmount = useSpring(scrollVelocity, { stiffness: 80, damping: 20 });
+  const totalWidth = useMemo(() => computeTotalWidth(photos), [photos]);
+
+  // Clamp to 0: if content is narrower than viewport, don't scroll backward
+  const translateEnd = vw === 0 || shouldReduce ? 0 : Math.min(0, -(totalWidth - vw));
+
+  const rawX = useTransform(scrollYProgress, [0, 1], [0, translateEnd]);
+  const x = useSpring(rawX, { stiffness: 90, damping: 30, restDelta: 0.001 });
+
+  const scrollVel = useVelocity(scrollYProgress);
+  const blurSpring = useSpring(scrollVel, { stiffness: 80, damping: 20 });
+  const blurFilter: MotionValue<string> = useTransform(blurSpring, (v) => {
+    if (shouldReduce) return "none";
+    const abs = Math.abs(v);
+    return abs > 0.25 ? `blur(${Math.min((abs - 0.25) * 10, 5)}px)` : "none";
+  });
+
+  const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0.3]);
+
+  if (photos.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-20 overflow-hidden">
-      {title && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <SectionHeader eyebrow="GALLERY" title={title} />
-        </div>
-      )}
+    <>
+      {/* ── DESKTOP: scroll-jacked horizontal ─────────────────────────── */}
+      <div
+        ref={sectionRef}
+        className="relative hidden md:block"
+        style={{ height: `${SECTION_VH}vh` }}
+      >
+        <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+          {title && (
+            <motion.div
+              style={{ opacity: titleOpacity }}
+              className="max-w-7xl mx-auto px-6 w-full pt-12 shrink-0 z-10"
+            >
+              <SectionHeader eyebrow="GALLERY" title={title} />
+            </motion.div>
+          )}
 
-      {/* DESKTOP : parallax */}
-      <div className="hidden md:flex items-center justify-center gap-5 h-[320px] lg:h-[360px] relative">
-        {photos.map((photo, i) => (
-          <ParallaxItem
-            key={i}
-            photo={photo}
-            speed={SPEEDS[i % SPEEDS.length]}
-            scrollYProgress={scrollYProgress}
-            blurAmount={blurAmount}
-          />
-        ))}
+          <div className="flex-1 relative overflow-hidden">
+            <motion.div
+              style={{ x, filter: blurFilter, paddingLeft: SIDE_PAD, paddingRight: SIDE_PAD, gap: GAP }}
+              className="absolute top-0 bottom-0 left-0 flex items-center"
+            >
+              {photos.map((photo, i) => (
+                <HCard
+                  key={photo.src}
+                  photo={photo}
+                  index={i}
+                  scrollYProgress={scrollYProgress}
+                  reduceMotion={shouldReduce}
+                />
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Racing progress bar */}
+          <div className="shrink-0 px-12 pb-8 z-10">
+            <div className="relative h-px bg-white/10 overflow-hidden rounded-full">
+              <motion.div
+                style={{ scaleX: progressScaleX, originX: 0 }}
+                className="absolute inset-0 bg-accent-yellow rounded-full"
+              />
+            </div>
+            <div className="flex justify-between mt-1.5">
+              <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/20">
+                En piste
+              </span>
+              <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/20">
+                {photos.length} photos
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* MOBILE : stack vertical */}
-      <div className="md:hidden flex flex-col gap-5 px-4">
-        {photos.map((photo, i) => (
-          <div key={i} className="relative rounded-lg overflow-hidden">
-            <div className="relative aspect-[3/2] bg-carbon-800">
+      {/* ── MOBILE: staggered vertical ────────────────────────────────── */}
+      <div className="md:hidden py-10 px-4">
+        {title && (
+          <div className="mb-6">
+            <SectionHeader eyebrow="GALLERY" title={title} />
+          </div>
+        )}
+        <div className="flex flex-col gap-5">
+          {photos.map((photo, i) => (
+            <motion.div
+              key={photo.src}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: shouldReduce ? 0 : i * 0.06, type: "spring", stiffness: 200, damping: 26 }}
+              className="relative rounded-xl overflow-hidden aspect-[3/2]"
+            >
               <Image
                 src={photo.src}
                 alt={photo.alt}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) calc(100vw - 2rem)"
+                sizes="calc(100vw - 2rem)"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10" />
-              <div className="absolute bottom-0 left-0 right-0 px-4 py-3">
-                <p className="font-sans text-sm font-medium text-white">{photo.caption ?? photo.alt}</p>
-              </div>
-            </div>
-          </div>
-        ))}
+              {photo.caption && (
+                <div className="absolute bottom-0 left-0 right-0 px-4 py-3">
+                  <p className="font-sans text-sm font-semibold text-white">{photo.caption}</p>
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
       </div>
-
-      {/* Gradients masques latéraux desktop */}
-      <div className="hidden md:block absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none z-20" />
-      <div className="hidden md:block absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-20" />
-    </section>
+    </>
   );
 }

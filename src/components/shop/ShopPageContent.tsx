@@ -77,9 +77,9 @@ export function ShopPageContent({ products }: ShopPageContentProps) {
       {/* Titre + bouton filtres — bloc fixe */}
       <div className="shrink-0 border-b border-white/[0.06] py-10 md:py-12 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <SectionHeader eyebrow="SHOP" title="Boutique" />
+          <SectionHeader eyebrow="ENGINEERING STORE" title="Boutique" />
           <p className="text-foreground/50 text-sm font-mono max-w-lg -mt-4">
-            Châssis compétition · Moteurs · Consommables · Équipement pilote
+            Nous ne vendons pas du matériel. Nous vendons les armes qui nous font gagner.
           </p>
 
           {/* Bouton filtres mobile */}

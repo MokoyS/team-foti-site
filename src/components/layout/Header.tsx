@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "@/contexts/LocaleContext";
@@ -43,9 +44,19 @@ export function Header() {
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-10 lg:gap-16 h-14 px-4 sm:px-6">
         <Link
           href="/"
-          className="font-heading font-extrabold italic text-lg tracking-tight text-accent-yellow hover:text-accent-yellow/90 transition justify-self-start"
+          className="flex items-center justify-self-start group"
+          aria-label="Team Foti — Accueil"
         >
-          TEAM FOTI
+          <div className="relative h-9 w-[96px] shrink-0">
+            <Image
+              src="/logo.svg"
+              alt="Logo Team Foti"
+              fill
+              className="object-contain object-left"
+              sizes="96px"
+              priority
+            />
+          </div>
         </Link>
 
         <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-8 min-w-0">

@@ -7,9 +7,9 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 const STATS = [
-  { value: "40", unit: "ans", label: "d'expertise" },
-  { value: "🏆", unit: "", label: "Champion d'Europe" },
-  { value: "2", unit: "gen.", label: "Famille Foti" },
+  { value: "1978", unit: "", label: "Fondation" },
+  { value: "2×", unit: "", label: "Champion d'Europe" },
+  { value: "3", unit: "pôles", label: "Direction · Technique · Coaching" },
 ];
 
 export function HomeAboutSection() {
@@ -35,7 +35,7 @@ export function HomeAboutSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
 
-            {/* Badge "40 ans" flottant */}
+            {/* Badge flottant */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -43,8 +43,8 @@ export function HomeAboutSection() {
               transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
               className="absolute -bottom-5 -right-4 sm:-right-6 bg-accent-yellow text-black rounded-lg px-4 py-3 shadow-xl"
             >
-              <div className="font-heading font-bold text-2xl leading-none">40</div>
-              <div className="font-mono text-[10px] uppercase tracking-widest mt-0.5">ans</div>
+              <div className="font-heading font-bold text-2xl leading-none">1978</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest mt-0.5">Fondation</div>
             </motion.div>
           </div>
 
@@ -53,13 +53,13 @@ export function HomeAboutSection() {
             {/* Accroche */}
             <div>
               <h3 className="font-heading font-bold italic text-xl sm:text-2xl text-foreground leading-snug mb-4">
-                Une institution familiale du karting,{" "}
-                <span className="text-accent-yellow">fondée par les Foti.</span>
+                40 ans d&apos;ingénierie moteur{" "}
+                <span className="text-accent-yellow">par Sébastien Foti.</span>
               </h3>
               <p className="text-foreground/70 text-sm sm:text-base leading-relaxed">
-                Expertise technique, palmarès en Championnat d'Europe et en France.
-                Nous accompagnons le père de famille comme le pilote professionnel —
-                de l'atelier à la grille de départ.
+                Fondée en 1978, la Team Foti est une institution du karting européen.
+                Sébastien Foti, Alexis Garcia et leur équipe accompagnent pilotes pro et amateurs —
+                du banc d&apos;essai à la grille de départ.
               </p>
             </div>
 

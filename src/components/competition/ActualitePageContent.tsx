@@ -45,11 +45,11 @@ function ActualiteHero() {
     <div ref={ref} className="relative h-[70vh] w-full overflow-hidden -mt-24 mb-0">
       <motion.div style={{ y }} className="absolute inset-0 h-[120%]">
         <Image
-          src="/images home/kartrace.png"
-          alt="Team Foti en course"
+          src="/Photos%20/resultats-podiums/21_OPENKART_Salbris_22022026-_T5A4369.jpg"
+          alt="Open Kart Salbris 2026 — Team Foti"
           fill
           priority
-          className="object-cover object-center opacity-60"
+          className="object-cover object-center opacity-65"
           sizes="100vw"
         />
       </motion.div>
@@ -97,6 +97,7 @@ export function ActualitePageContent({ articles }: ActualitePageContentProps) {
   return (
     <div className="min-h-screen bg-background bg-carbon-texture">
       <ActualiteHero />
+
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
 
@@ -205,16 +206,16 @@ export function ActualitePageContent({ articles }: ActualitePageContentProps) {
         <ScrollReveal>
           <div className="relative rounded-xl overflow-hidden aspect-[21/9] mb-16 md:mb-24">
             <Image
-              src="/images home/kartrace2.png"
-              alt="Team Foti en piste"
+              src="/Photos%20/Pilotes/Salbris%203.jpg"
+              alt="Pilotes Team Foti en course à Salbris"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 1280px) 100vw, 1280px"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/40" />
             <div className="absolute bottom-6 left-8">
               <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/30">
-                En compétition — Team Foti
+                Salbris — Team Foti en course
               </span>
             </div>
           </div>
